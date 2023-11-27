@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/textView00"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:text="@string/sign_up"
+            android:textColor="@color/purple_500"
+            android:textSize="@dimen/title_size"
+            android:typeface="sans"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView01"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="29dp"
+            android:layout_marginTop="2dp"
+            android:text="@string/name"
+            android:textColor="@color/black"
+            android:textSize="@dimen/txt_size"
+            android:typeface="sans"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textView00" />
+
+        <EditText
+            android:id="@+id/EditText00"
+            android:layout_width="350dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="29dp"
+            android:autofillHints=""
+            android:background="@drawable/txt_back"
+            android:drawablePadding="20dp"
+            android:hint="@string/enter_your_name"
+            android:inputType="textEmailAddress"
+            android:paddingStart="15dp"
+            android:textColorHint="@color/white"
+            android:textSize="@dimen/hint_size"
+            android:typeface="sans"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textView01"
+            tools:ignore="RtlSymmetry" />
+
+        <TextView
+            android:id="@+id/textView02"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_marginStart="29dp"
+            android:layout_marginTop="20dp"
+            android:text="@string/age"
+            android:textColor="@color/black"
+            android:textSize="@dimen/txt_size"
+            android:typeface="sans"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/EditText00" />
+
+        <EditText
+            android:id="@+id/editText01"
+            android:layout_width="350dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="29dp"
+            android:autofillHints=""
+            android:background="@drawable/txt_back"
+            android:drawablePadding="20dp"
+            android:hint="@string/enter_your_age"
+            android:inputType="numberDecimal"
+            android:paddingStart="15dp"
+            android:textColorHint="@color/white"
+            android:textSize="@dimen/hint_size"
+            android:typeface="sans"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textView02"
+            tools:ignore="RtlSymmetry" />
+
+        <TextView
+            android:id="@+id/textView03"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="29dp"
+            android:layout_marginTop="20dp"
+            android:text="@string/phone_number"
+            android:textColor="@color/black"
+            android:textSize="@dimen/txt_size"
+            android:typeface="sans"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/editText01" />
+
+        <EditText
+            android:id="@+id/editText02"
+            android:layout_width="350dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="29dp"
+            android:autofillHints=""
+            android:background="@drawable/txt_back"
+            android:drawablePadding="20dp"
+            android:hint="@string/enter_your_phone_number"
+            android:inputType="numberDecimal"
+            android:paddingStart="15dp"
+            android:textColorHint="@color/white"
+            android:textSize="@dimen/hint_size"
+            android:typeface="sans"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textView03"
+            tools:ignore="RtlSymmetry" />
+
+        <TextView
+            android:id="@+id/textView04"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="29dp"
+            android:layout_marginTop="20dp"
+            android:text="@string/email"
+            android:textColor="@color/black"
+            android:textSize="@dimen/txt_size"
+            android:typeface="sans"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/editText02" />
+
+
+        <EditText
+            android:id="@+id/editText03"
+            android:layout_width="350dp"
+            android:layout_height="50dp"
+            android:layout_below="@id/textView04"
+            android:layout_marginStart="28dp"
+            android:autofillHints=""
+            android:background="@drawable/txt_back"
+            android:drawablePadding="20dp"
+            android:hint="@string/enter_your_email"
+            android:inputType="textEmailAddress"
+            android:paddingStart="15dp"
+            android:textColorHint="@color/white"
+            android:textSize="@dimen/hint_size"
+            android:typeface="sans"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textView04"
+            tools:ignore="RtlSymmetry" />
+
+
+        <TextView
+            android:id="@+id/textView05"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="29dp"
+            android:layout_marginTop="20dp"
+            android:text="@string/password"
+            android:textColor="@color/black"
+            android:textSize="@dimen/txt_size"
+            android:typeface="sans"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/editText03" />
+
+        <EditText
+            android:id="@+id/editText04"
+            android:layout_width="350dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="29dp"
+            android:autofillHints=""
+            android:background="@drawable/txt_back"
+            android:drawablePadding="20dp"
+            android:hint="@string/enter_your_password"
+            android:inputType="textPassword"
+            android:paddingStart="15dp"
+            android:textColorHint="@color/white"
+            android:textSize="@dimen/hint_size"
+            android:typeface="sans"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textView05"
+            tools:ignore="RtlSymmetry" />
+
+        <ProgressBar
+            android:id="@+id/progressBar00"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button00"
+            android:layout_width="210dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="165dp"
+            android:backgroundTint="#0F6CB6"
+            android:text="@string/register"
+            android:textColor="#FFFFFF"
+            android:textSize="@dimen/btn_Size"
+            android:textStyle="bold"
+            app:cornerRadius="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textView04" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

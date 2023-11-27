@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <TextView
+        android:id="@+id/textView00"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="60dp"
+        android:text="@string/sign_in"
+        android:textColor="@color/black"
+        android:textSize="40sp"
+        android:typeface="sans" />
+
+    <TextView
+        android:id="@+id/textView01"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textView00"
+        android:layout_marginStart="29dp"
+        android:layout_marginTop="2dp"
+        android:text="@string/email"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:typeface="sans" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/editText00"
+        android:layout_width="350dp"
+        android:layout_height="50dp"
+        android:layout_below="@id/textView01"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="25dp"
+        android:background="@drawable/txt_back"
+        android:drawableStart="@drawable/key"
+        android:drawablePadding="20dp"
+        android:hint="@string/enter_your_email"
+        android:inputType="textEmailAddress"
+        android:paddingStart="15sp"
+        android:textColorHint="@color/black"
+        android:textSize="18sp"
+        android:typeface="sans"
+        tools:ignore="RtlSymmetry" />
+
+
+    <TextView
+        android:id="@+id/textView02"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/editText00"
+        android:layout_marginStart="29dp"
+        android:text="@string/password"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:typeface="sans" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/editText01"
+        android:layout_width="350dp"
+        android:layout_height="50dp"
+        android:layout_below="@id/textView02"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/txt_back"
+        android:drawableStart="@drawable/mail"
+        android:drawablePadding="20dp"
+        android:hint="@string/password_hint"
+        android:inputType="textPassword"
+        android:paddingStart="15dp"
+        android:textColorHint="@color/black"
+        android:textSize="18sp"
+        android:typeface="sans"
+        tools:ignore="RtlSymmetry" />
+
+    <Button
+        android:id="@+id/Button00"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/editText01"
+        android:layout_marginStart="260dp"
+        android:layout_marginBottom="25dp"
+        android:background="#00000000"
+        android:backgroundTint="#00000000"
+        android:text="@string/forget_password"
+        android:textColor="@color/black"
+        android:textSize="10sp"
+        tools:ignore="SmallSp" />
+
+    <com.google.android.material.checkbox.MaterialCheckBox
+        android:id="@+id/checkbox00"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/Button00"
+        android:layout_marginStart="29dp"
+        android:layout_marginBottom="25dp"
+        android:buttonTint="#858484"
+        android:checked="true"
+        android:text="@string/remember_me"
+        android:textColor="@color/black"
+        android:textSize="15sp" />
+
+    <ProgressBar
+        android:id="@+id/progressBar00"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/button01"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/checkbox00"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="25dp"
+        android:backgroundTint="#2196F3"
+        android:text="@string/login"
+        android:textColor="#FFFFFF"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        app:cornerRadius="42dp" />
+
+
+    <TextView
+        android:id="@+id/textView03"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/button01"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="25dp"
+        android:text="@string/or"
+        android:textColor="@color/black"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/textView04"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textView03"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="25dp"
+        android:text="@string/sign_up"
+        android:textColor="@color/black"
+        android:textSize="20sp" />
+
+</RelativeLayout>
