@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -26,13 +27,14 @@ public class RegistrationActivity extends AppCompatActivity {
     Button buttonRegister;
     FirebaseAuth mAuth;
     ProgressBar progressBar;
+    TextView textViewLogin;
 
     @Override
     public void onStart() {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        if(currentUser != null){
+        if (currentUser != null) {
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(intent);
             finish();
@@ -47,12 +49,20 @@ public class RegistrationActivity extends AppCompatActivity {
         editTextPassword = findViewById(R.id.editText04);
         buttonRegister = findViewById(R.id.button00);
         progressBar = findViewById(R.id.progressBar00);
+        textViewLogin = findViewById(R.id.textView07);
         mAuth = FirebaseAuth.getInstance();
 
+        textViewLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
         buttonRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                progressBar.setVisibility(View.VISIBLE);
                 String emailText, passwordText;
                 emailText = String.valueOf(editTextEmail.getText());
                 passwordText = String.valueOf(editTextPassword.getText());
@@ -66,6 +76,8 @@ public class RegistrationActivity extends AppCompatActivity {
                     Toast.makeText(RegistrationActivity.this, "Enter password", Toast.LENGTH_SHORT).show();
                     return;
                 }
+
+                progressBar.setVisibility(View.VISIBLE);
 
                 mAuth.createUserWithEmailAndPassword(emailText, passwordText).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override

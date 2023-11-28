@@ -65,4 +65,5 @@
     <string name="enter_your_password">Enter your password</string>
     <string name="register">Register</string>
     <string name="password_hint">Enter your password</string>
+    <string name="from_where">From where?</string>
 </resources>
