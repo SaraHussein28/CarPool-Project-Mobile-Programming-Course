@@ -31,14 +31,14 @@
                 android:layout_height="wrap_content"
                 android:text="@string/pick_up_time"
                 android:textColor="#737373"
-                app:layout_constraintBottom_toTopOf="@id/text_time_02"
+                app:layout_constraintBottom_toTopOf="@id/textView01"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
 
             <TextView
-                android:id="@+id/text_time_02"
+                android:id="@+id/textView01"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/drop_off_time"
