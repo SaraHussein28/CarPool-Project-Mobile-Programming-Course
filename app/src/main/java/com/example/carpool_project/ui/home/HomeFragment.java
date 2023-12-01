@@ -1,5 +1,6 @@
 package com.example.carpool_project.ui.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,10 +14,13 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.carpool_project.R;
 import com.example.carpool_project.databinding.FragmentHomeBinding;
+import com.example.carpool_project.ui.gallery.GalleryFragment;
 
 public class HomeFragment extends Fragment {
 
@@ -26,6 +30,8 @@ public class HomeFragment extends Fragment {
     AutoCompleteTextView datesAutoCompleteTextView, sourceAutoCompleteTextView, destinationAutoCompleteTextView;
     ArrayAdapter<String> datesArrayAdapter, districtArrayAdapter;
     ImageView imageView;
+    Button submitButton;
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         HomeViewModel homeViewModel =
@@ -91,6 +97,29 @@ public class HomeFragment extends Fragment {
 //                setArrayAdapters();
             }
         });
+    submitButton.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+
+            FragmentManager fragM = getParentFragmentManager();
+            FragmentTransaction fragT = fragM.beginTransaction();
+            GalleryFragment galleryFragment = new GalleryFragment();
+            Bundle args = new Bundle();
+            //TODO: consider other data passing options.
+            args.putString("source", sourceAutoCompleteTextView.getText().toString());
+            galleryFragment.setArguments(args);
+            fragT.replace(R.id.nav_host_fragment_content_first, galleryFragment);
+            fragT.commit();
+
+//            FragmentManager fm = getFragmentManager();
+//            FragmentTransaction ft = fm.beginTransaction();
+//            FragmentGreen llf = new FragmentGreen();
+//            ft.replace(R.id.listFragment, llf);
+//            ft.commit()
+
+        }
+    });
+
     }
 
     private void findLayoutElements(FragmentHomeBinding binding) {
@@ -98,6 +127,7 @@ public class HomeFragment extends Fragment {
         sourceAutoCompleteTextView = binding.autoCompleteTextView01;
         destinationAutoCompleteTextView = binding.autoCompleteTextView02;
         imageView = binding.imageView00;
+        submitButton = binding.button00;
     }
 
     @Override
