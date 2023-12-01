@@ -115,9 +115,9 @@
         <ImageView
             android:id="@+id/imageView00"
             android:layout_width="0dp"
-            android:layout_weight="1"
+            android:layout_height="26dp"
             android:layout_gravity="center"
-            android:layout_height="30dp"
+            android:layout_weight="1"
             android:src="@drawable/swap" />
     </LinearLayout>
 

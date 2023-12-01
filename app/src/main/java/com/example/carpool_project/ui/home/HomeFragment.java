@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -23,29 +25,45 @@ public class HomeFragment extends Fragment {
     private FragmentHomeBinding binding;
     AutoCompleteTextView datesAutoCompleteTextView, sourceAutoCompleteTextView, destinationAutoCompleteTextView;
     ArrayAdapter<String> datesArrayAdapter, districtArrayAdapter;
+    ImageView imageView;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         HomeViewModel homeViewModel =
                 new ViewModelProvider(this).get(HomeViewModel.class);
-
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-        datesAutoCompleteTextView = binding.autoCompleteTextView00;
-        sourceAutoCompleteTextView = binding.autoCompleteTextView01;
-        destinationAutoCompleteTextView = binding.autoCompleteTextView02;
 
-        datesArrayAdapter = new ArrayAdapter<String>(this.getActivity(), R.layout.list_item, datesList);
+        findLayoutElements(binding);
+        setClickListeners();
+        createArrayAdapters();
+        setArrayAdapters();
+
+
+//        final TextView textView = binding.textHome;
+//        homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        return root;
+    }
+
+    private void setArrayAdapters() {
+
         datesAutoCompleteTextView.setAdapter(datesArrayAdapter);
-
-        districtArrayAdapter = new ArrayAdapter<String>(this.getActivity(), R.layout.list_item, districtNames);
         sourceAutoCompleteTextView.setAdapter(districtArrayAdapter);
         destinationAutoCompleteTextView.setAdapter(districtArrayAdapter);
 
+    }
+
+    private void createArrayAdapters() {
+        datesArrayAdapter = new ArrayAdapter<String>(this.getActivity(), R.layout.list_item, datesList);
+        districtArrayAdapter = new ArrayAdapter<String>(this.getActivity(), R.layout.list_item, districtNames);
+
+    }
+
+    private void setClickListeners() {
         datesAutoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String item = parent.getItemAtPosition(position).toString();
-                Toast.makeText(getActivity(), "Item "+ item, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Item " + item, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -53,20 +71,33 @@ public class HomeFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String item = parent.getItemAtPosition(position).toString();
-                Toast.makeText(getActivity(), "Item "+ item, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Item " + item, Toast.LENGTH_SHORT).show();
             }
         });
-
         destinationAutoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String item = parent.getItemAtPosition(position).toString();
-                Toast.makeText(getActivity(), "Item "+ item, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Item " + item, Toast.LENGTH_SHORT).show();
             }
         });
-//        final TextView textView = binding.textHome;
-//        homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
-        return root;
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO: add the logic to swap the selected values in the two drop down lists.
+//                String temp = sourceAutoCompleteTextView.getText().toString();
+//                sourceAutoCompleteTextView.setText(destinationAutoCompleteTextView.getText());
+//                destinationAutoCompleteTextView.setText(temp);
+//                setArrayAdapters();
+            }
+        });
+    }
+
+    private void findLayoutElements(FragmentHomeBinding binding) {
+        datesAutoCompleteTextView = binding.autoCompleteTextView00;
+        sourceAutoCompleteTextView = binding.autoCompleteTextView01;
+        destinationAutoCompleteTextView = binding.autoCompleteTextView02;
+        imageView = binding.imageView00;
     }
 
     @Override
