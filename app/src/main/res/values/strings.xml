@@ -75,6 +75,15 @@
     <string name="action_settings">Settings</string>
 
     <string name="menu_home">Home</string>
-    <string name="menu_gallery">Gallery</string>
-    <string name="menu_slideshow">Slideshow</string>
+    <string name="menu_routes">Available Routes</string>
+    <string name="menu_payment">Payment</string>
+    <string name="menu_profile">Profile</string>
+    <string name="menu_wallet">Wallet</string>
+    <string name="menu_trips">Your Trips</string>
+    <string name="title_activity_my_trips">MyTripsActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+
+
 </resources>
