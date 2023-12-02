@@ -1,6 +1,5 @@
 package com.example.carpool_project.ui.home;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,7 +19,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.carpool_project.R;
 import com.example.carpool_project.databinding.FragmentHomeBinding;
-import com.example.carpool_project.ui.gallery.GalleryFragment;
+import com.example.carpool_project.ui.routes.RoutesFragment;
 
 public class HomeFragment extends Fragment {
 
@@ -103,12 +102,12 @@ public class HomeFragment extends Fragment {
 
             FragmentManager fragM = getParentFragmentManager();
             FragmentTransaction fragT = fragM.beginTransaction();
-            GalleryFragment galleryFragment = new GalleryFragment();
+            RoutesFragment routesFragment = new RoutesFragment();
             Bundle args = new Bundle();
             //TODO: consider other data passing options.
             args.putString("source", sourceAutoCompleteTextView.getText().toString());
-            galleryFragment.setArguments(args);
-            fragT.replace(R.id.nav_host_fragment_content_first, galleryFragment);
+            routesFragment.setArguments(args);
+            fragT.replace(R.id.nav_host_fragment_content_first, routesFragment);
             fragT.commit();
 
 //            FragmentManager fm = getFragmentManager();
