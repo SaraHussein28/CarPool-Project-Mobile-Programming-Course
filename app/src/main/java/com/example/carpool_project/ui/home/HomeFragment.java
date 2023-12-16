@@ -24,7 +24,7 @@ import com.example.carpool_project.ui.routes.RoutesFragment;
 public class HomeFragment extends Fragment {
 
     String[] datesList = {"Now", "tomorrow", "Dec 3", "Dec 4", "Dec 5"};
-    String[] districtNames = {"Maadi", "Nasr City", "Zamalek", "Mohandseen", "Abassia Square"};
+    String[] districtNames = {"Maadi", "Nasr City", "Zamalek", "Mohandseen", "Abassia Square", "ASU, Faculty of Engineering - Gate 3"};
     private FragmentHomeBinding binding;
     AutoCompleteTextView datesAutoCompleteTextView, sourceAutoCompleteTextView, destinationAutoCompleteTextView;
     ArrayAdapter<String> datesArrayAdapter, districtArrayAdapter;
@@ -96,28 +96,23 @@ public class HomeFragment extends Fragment {
 //                setArrayAdapters();
             }
         });
-    submitButton.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
+        submitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-            FragmentManager fragM = getParentFragmentManager();
-            FragmentTransaction fragT = fragM.beginTransaction();
-            RoutesFragment routesFragment = new RoutesFragment();
-            Bundle args = new Bundle();
-            //TODO: consider other data passing options.
-            args.putString("source", sourceAutoCompleteTextView.getText().toString());
-            routesFragment.setArguments(args);
-            fragT.replace(R.id.nav_host_fragment_content_first, routesFragment);
-            fragT.commit();
-
-//            FragmentManager fm = getFragmentManager();
-//            FragmentTransaction ft = fm.beginTransaction();
-//            FragmentGreen llf = new FragmentGreen();
-//            ft.replace(R.id.listFragment, llf);
-//            ft.commit()
-
-        }
-    });
+                FragmentManager fragM = getParentFragmentManager();
+                FragmentTransaction fragT = fragM.beginTransaction();
+                RoutesFragment routesFragment = new RoutesFragment();
+                Bundle args = new Bundle();
+                //TODO: consider other data passing options.
+                args.putString("source", sourceAutoCompleteTextView.getText().toString());
+                args.putString("destination", destinationAutoCompleteTextView.getText().toString());
+                args.putString("time", datesAutoCompleteTextView.getText().toString());
+                routesFragment.setArguments(args);
+                fragT.replace(R.id.nav_host_fragment_content_first, routesFragment);
+                fragT.commit();
+            }
+        });
 
     }
 

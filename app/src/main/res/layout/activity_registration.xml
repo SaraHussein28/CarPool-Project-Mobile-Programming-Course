@@ -37,7 +37,7 @@
             app:layout_constraintTop_toBottomOf="@id/textView00" />
 
         <EditText
-            android:id="@+id/EditText00"
+            android:id="@+id/editText00"
             android:layout_width="350dp"
             android:layout_height="50dp"
             android:layout_marginStart="29dp"
@@ -65,7 +65,7 @@
             android:textSize="@dimen/txt_size"
             android:typeface="sans"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/EditText00" />
+            app:layout_constraintTop_toBottomOf="@id/editText00" />
 
         <EditText
             android:id="@+id/editText01"

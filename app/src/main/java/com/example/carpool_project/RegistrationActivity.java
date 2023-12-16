@@ -23,7 +23,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class RegistrationActivity extends AppCompatActivity {
 
-    EditText editTextEmail, editTextPassword;
+    EditText editTextEmail, editTextPassword, editTextName, editTextPhone, editTextAge;
     Button buttonRegister;
     FirebaseAuth mAuth;
     ProgressBar progressBar;
@@ -45,6 +45,9 @@ public class RegistrationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
+        editTextName = findViewById(R.id.editText00);
+        editTextAge = findViewById(R.id.editText01);
+        editTextPhone = findViewById(R.id.editText02);
         editTextEmail = findViewById(R.id.editText03);
         editTextPassword = findViewById(R.id.editText04);
         buttonRegister = findViewById(R.id.button00);
@@ -61,19 +64,40 @@ public class RegistrationActivity extends AppCompatActivity {
             }
         });
         buttonRegister.setOnClickListener(new View.OnClickListener() {
+            // TODO: add input validation function to check that the entered email matched FOE - ASU Domain.
             @Override
             public void onClick(View v) {
-                String emailText, passwordText;
+                String nameText, ageText, phoneText, emailText, passwordText;
+
+                nameText = String.valueOf(editTextName.getText());
+                ageText = String.valueOf(editTextAge.getText());
+                phoneText = String.valueOf(editTextPhone.getText());
                 emailText = String.valueOf(editTextEmail.getText());
                 passwordText = String.valueOf(editTextPassword.getText());
 
+
+                if (TextUtils.isEmpty(nameText)) {
+                    Toast.makeText(RegistrationActivity.this, "Enter your name", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (TextUtils.isEmpty(ageText)) {
+                    Toast.makeText(RegistrationActivity.this, "Enter your age", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (TextUtils.isEmpty(phoneText)) {
+                    Toast.makeText(RegistrationActivity.this, "Enter your phone number", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 if (TextUtils.isEmpty(emailText)) {
-                    Toast.makeText(RegistrationActivity.this, "Enter email", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegistrationActivity.this, "Enter your email", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 if (TextUtils.isEmpty(passwordText)) {
-                    Toast.makeText(RegistrationActivity.this, "Enter password", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegistrationActivity.this, "Enter your password", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -85,7 +109,7 @@ public class RegistrationActivity extends AppCompatActivity {
                         progressBar.setVisibility(View.GONE);
                         if (task.isSuccessful()) {
                             Toast.makeText(RegistrationActivity.this, "Authentication Succeeded.", Toast.LENGTH_SHORT).show();
-
+                            storeNewUserDate();
                             // Sign in success, update UI with the signed-in user's information
 //                                    FirebaseUser user = mAuth.getCurrentUser();
                         } else {
@@ -100,5 +124,8 @@ public class RegistrationActivity extends AppCompatActivity {
         });
 
 
+    }
+
+    private void storeNewUserDate() {
     }
 }
