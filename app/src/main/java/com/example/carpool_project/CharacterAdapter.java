@@ -5,14 +5,18 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.MutableLiveData;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public class CharacterAdapter extends RecyclerView.Adapter<CharacterViewHolder> {
-    private final List<Character> characters;
+//    private final List<Character> characters;
 
-    public  CharacterAdapter(List <Character> characters){
+    private final ArrayList<RouteHelperClass> characters;
+
+
+    public  CharacterAdapter(ArrayList<RouteHelperClass> characters){
         this.characters = characters;
     }
     @NonNull
@@ -25,7 +29,7 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull CharacterViewHolder holder, int position) {
-    Character currentCharacter = characters.get(position);
+    RouteHelperClass currentCharacter = characters.get(position);
     holder.populateCharacterInfo(currentCharacter);
     }
 

@@ -1,6 +1,7 @@
 package com.example.carpool_project;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
@@ -10,15 +11,25 @@ import java.util.List;
 
 public class RoutesActivity extends AppCompatActivity {
 
+    WordViewModel mWordViewModel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_routes);
         List <Character> characters= getCharacters();
-
-        CharacterAdapter characterAdapter = new CharacterAdapter(characters);
         RecyclerView recyclerView = findViewById(R.id.recyclerView00);
-        recyclerView.setAdapter(characterAdapter);
+
+
+        mWordViewModel = new ViewModelProvider(this).get(WordViewModel.class);
+        mWordViewModel.getAllRoutes().observe(this, words -> {
+            // Update the cached copy of the words in the adapter.
+            CharacterAdapter characterAdapter = new CharacterAdapter(words);
+            recyclerView.setAdapter(characterAdapter);
+
+        });
+//        CharacterAdapter characterAdapter = new CharacterAdapter(characters);
+//        RecyclerView recyclerView = findViewById(R.id.recyclerView00);
+//        recyclerView.setAdapter(characterAdapter);
 
     }
 

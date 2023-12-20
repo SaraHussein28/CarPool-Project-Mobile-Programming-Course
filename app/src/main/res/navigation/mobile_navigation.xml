@@ -32,5 +32,10 @@
         android:name="com.example.carpool_project.ui.payment.PaymentFragment"
         android:label="@string/menu_profile"
         tools:layout="@layout/fragment_payment" />
+    <fragment
+        android:id="@+id/nav_cart"
+        android:name="com.example.carpool_project.ui.cart.CartFrament"
+        android:label="@string/menu_profile"
+        tools:layout="@layout/fragment_cart_frament" />
 
 </navigation>

@@ -84,6 +84,13 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+    <string name="gender">Gender</string>
+    <string name="enter_your_gender">Enter your gender</string>
+    <string name="username">Username</string>
+    <string name="enter_your_username">Enter your username</string>
+    <string name="add_ride">Add ride</string>
+    <string name="add_ride_text">Let\'s add a new ride!</string>
+    <string name="my_cart">My Cart</string>
 
 
 </resources>

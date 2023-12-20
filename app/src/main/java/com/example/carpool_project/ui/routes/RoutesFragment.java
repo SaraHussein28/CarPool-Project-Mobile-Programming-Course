@@ -1,6 +1,9 @@
 package com.example.carpool_project.ui.routes;
 
+import static android.content.ContentValues.TAG;
+
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,12 +11,22 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.carpool_project.Character;
 import com.example.carpool_project.CharacterAdapter;
+import com.example.carpool_project.RouteHelperClass;
+import com.example.carpool_project.WordViewModel;
 import com.example.carpool_project.databinding.FragmentRoutesBinding;
+import com.google.android.gms.tasks.Tasks;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -23,9 +36,11 @@ import java.util.List;
 import java.util.Objects;
 
 public class RoutesFragment extends Fragment {
-
+    private WordViewModel mWordViewModel;
     private final String FACULTY_POINT = "ASU, Faculty of Engineering - Gate 3";
     private FragmentRoutesBinding binding;
+//    MutableLiveData< ArrayList<RouteHelperClass>> liveDataRoutesList;
+//    ArrayList<RouteHelperClass> routesList = new ArrayList<>();
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         RoutesViewModel routesViewModel = new ViewModelProvider(this).get(RoutesViewModel.class);
@@ -33,41 +48,32 @@ public class RoutesFragment extends Fragment {
         binding = FragmentRoutesBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        List<Character> characters = getCharacters();
         RecyclerView recyclerView = binding.recyclerView00;
 
 
-        try {
-            String source = getArguments().getString("source", "default");
-            String destination = getArguments().getString("destination", "default");
-            String time = getArguments().getString("time", "default");
-
-            List<Character> filteredCharacters = filterResults(characters, source, destination, time);
-            CharacterAdapter characterAdapter = new CharacterAdapter(filteredCharacters);
+        mWordViewModel = new ViewModelProvider(this).get(WordViewModel.class);
+        mWordViewModel.getAllRoutes().observe(getViewLifecycleOwner(), words -> {
+            // Update the cached copy of the words in the adapter.
+            CharacterAdapter characterAdapter = new CharacterAdapter(words);
             recyclerView.setAdapter(characterAdapter);
 
-            Toast.makeText(this.getContext(), "source" + source, Toast.LENGTH_SHORT).show();
-
-        } catch (NullPointerException e) {
-            CharacterAdapter characterAdapter = new CharacterAdapter(characters);
-            recyclerView.setAdapter(characterAdapter);
-        }
+        });
 
 //        final TextView textView = binding.textGallery;
 //        galleryViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+
         return root;
     }
 
     private List<Character> filterResults(List<Character> characters, String source, String destination, String time) {
         List<Character> filteredCharacters = new ArrayList<>();
 
-       // TODO: consider changing the data type for the time;
+        // TODO: consider changing the data type for the time;
         LocalDateTime maxReservationTime;
-        if (Objects.equals(source, FACULTY_POINT)){
+        if (Objects.equals(source, FACULTY_POINT)) {
             maxReservationTime = LocalDateTime.of(LocalDate.now(), LocalTime.of(13, 0));
-        }
-        else {
-            maxReservationTime =  LocalDateTime.of(LocalDate.now(), LocalTime.of(22, 0));
+        } else {
+            maxReservationTime = LocalDateTime.of(LocalDate.now(), LocalTime.of(22, 0));
         }
 
         for (int i = 0; i < characters.size(); ++i) {
@@ -86,18 +92,9 @@ public class RoutesFragment extends Fragment {
         binding = null;
     }
 
-    private List<Character> getCharacters() {
-        ArrayList<Character> characters = new ArrayList<>();
-        characters.add(new Character("Abassia Square", "ASU, Faculty of Engineering - Gate 3", "7:30 am", "7:50 am"));
-        characters.add(new Character("Nasr city", "ASU, Faculty of Engineering - Gate 3", "7:30 am", "8:00 am"));
-        characters.add(new Character("Zamalek", "ASU, Faculty of Engineering - Gate 3", "7:30 am", "8:30 am"));
-        characters.add(new Character("ASU, Faculty of Engineering - Gate 3", "Abassia Square", "5:30 pm", "5:50 pm"));
-        characters.add(new Character("ASU, Faculty of Engineering - Gate 3", "Nasr city", "5:30 pm", "6:00 pm"));
-        characters.add(new Character("ASU, Faculty of Engineering - Gate 3", "Zamalek", "5:30 pm", "6:30 pm"));
-        characters.add(new Character("ASU, Faculty of Engineering - Gate 3", "Maadi", "5:30 pm", "6:30 pm"));
-
-        return characters;
+    private RouteHelperClass createNewRoute(DataSnapshot route) {
+        Log.d(TAG, "here is the source" + route.child("source").getValue().toString());
+        RouteHelperClass routeHelperClass = new RouteHelperClass(route.child("source").getValue().toString(), route.child("destination").getValue().toString(), route.child("day").getValue().toString(), route.child("pickupTime").getValue().toString(), route.child("dropOffTime").getValue().toString(), route.child("price").getValue().toString());
+        return routeHelperClass;
     }
 }
-
-

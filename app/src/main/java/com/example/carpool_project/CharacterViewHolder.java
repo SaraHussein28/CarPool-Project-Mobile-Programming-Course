@@ -13,6 +13,7 @@ public class CharacterViewHolder extends RecyclerView.ViewHolder implements View
     private final TextView dropOffTimeTextView;
     private final TextView sourcePointTextView;
     private final TextView destinationPointTextView;
+    private String tripFare;
 
     public CharacterViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -24,11 +25,12 @@ public class CharacterViewHolder extends RecyclerView.ViewHolder implements View
         itemView.setOnClickListener(this);
     }
 
-    public void populateCharacterInfo(Character character){
-        pickUpTimeTextView.setText(character.getPickUpTime());
+    public void populateCharacterInfo(RouteHelperClass character){
+        pickUpTimeTextView.setText(character.getPickupTime());
         dropOffTimeTextView.setText(character.getDropOffTime());
-        sourcePointTextView.setText(character.getSourcePoint());
-        destinationPointTextView.setText(character.getDestinationPoint());
+        sourcePointTextView.setText(character.getSource());
+        destinationPointTextView.setText(character.getDestination());
+        tripFare = character.getPrice();
     }
 
     @Override
@@ -40,6 +42,7 @@ public class CharacterViewHolder extends RecyclerView.ViewHolder implements View
             intent.putExtra("destination", destinationPointTextView.getText());
             intent.putExtra("drop_off_time", dropOffTimeTextView.getText());
             intent.putExtra("pick_up_time", pickUpTimeTextView.getText());
+            intent.putExtra("price", tripFare);
             itemView.getContext().startActivity(intent);
 
         }

@@ -60,12 +60,12 @@
             android:layout_height="20dp"
             android:layout_marginStart="29dp"
             android:layout_marginTop="20dp"
-            android:text="@string/age"
+            android:text="@string/gender"
             android:textColor="@color/black"
             android:textSize="@dimen/txt_size"
             android:typeface="sans"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/editText00" />
+            app:layout_constraintTop_toBottomOf="@id/editText08" />
 
         <EditText
             android:id="@+id/editText01"
@@ -75,8 +75,8 @@
             android:autofillHints=""
             android:background="@drawable/txt_back"
             android:drawablePadding="20dp"
-            android:hint="@string/enter_your_age"
-            android:inputType="numberDecimal"
+            android:hint="@string/enter_your_gender"
+            android:inputType="text"
             android:paddingStart="15dp"
             android:textColorHint="@color/white"
             android:textSize="@dimen/hint_size"
@@ -181,6 +181,37 @@
             app:layout_constraintTop_toBottomOf="@id/textView05"
             tools:ignore="RtlSymmetry" />
 
+        <TextView
+            android:id="@+id/textView08"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="29dp"
+            android:layout_marginTop="20dp"
+            android:text="@string/username"
+            android:textColor="@color/black"
+            android:textSize="@dimen/txt_size"
+            android:typeface="sans"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/editText00" />
+
+        <EditText
+            android:id="@+id/editText08"
+            android:layout_width="350dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="29dp"
+            android:autofillHints=""
+            android:background="@drawable/txt_back"
+            android:drawablePadding="20dp"
+            android:hint="@string/enter_your_username"
+            android:inputType="text"
+            android:paddingStart="15dp"
+            android:textColorHint="@color/white"
+            android:textSize="@dimen/hint_size"
+            android:typeface="sans"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textView08"
+            tools:ignore="RtlSymmetry" />
+
         <ProgressBar
             android:id="@+id/progressBar00"
             android:layout_width="wrap_content"
@@ -190,6 +221,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button00"
@@ -215,7 +247,6 @@
             android:text="@string/or"
             android:textColor="@color/black"
             android:textSize="20sp"
-
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/button00" />

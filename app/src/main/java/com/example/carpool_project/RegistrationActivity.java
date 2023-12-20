@@ -1,8 +1,5 @@
 package com.example.carpool_project;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -14,16 +11,22 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
+
+import com.example.carpool_project.ui.UserDao;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class RegistrationActivity extends AppCompatActivity {
-
-    EditText editTextEmail, editTextPassword, editTextName, editTextPhone, editTextAge;
+    private WordViewModel mWordViewModel;
+    EditText editTextEmail, editTextPassword, editTextName, editTextPhone, editTextGender, editTextUsername;
     Button buttonRegister;
     FirebaseAuth mAuth;
     ProgressBar progressBar;
@@ -46,7 +49,8 @@ public class RegistrationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
         editTextName = findViewById(R.id.editText00);
-        editTextAge = findViewById(R.id.editText01);
+        editTextUsername = findViewById(R.id.editText08);
+        editTextGender = findViewById(R.id.editText01);
         editTextPhone = findViewById(R.id.editText02);
         editTextEmail = findViewById(R.id.editText03);
         editTextPassword = findViewById(R.id.editText04);
@@ -67,10 +71,10 @@ public class RegistrationActivity extends AppCompatActivity {
             // TODO: add input validation function to check that the entered email matched FOE - ASU Domain.
             @Override
             public void onClick(View v) {
-                String nameText, ageText, phoneText, emailText, passwordText;
-
+                String nameText, genderText, phoneText, emailText, passwordText, userName;
+                userName = String.valueOf(editTextUsername.getText());
                 nameText = String.valueOf(editTextName.getText());
-                ageText = String.valueOf(editTextAge.getText());
+                genderText = String.valueOf(editTextGender.getText());
                 phoneText = String.valueOf(editTextPhone.getText());
                 emailText = String.valueOf(editTextEmail.getText());
                 passwordText = String.valueOf(editTextPassword.getText());
@@ -80,9 +84,13 @@ public class RegistrationActivity extends AppCompatActivity {
                     Toast.makeText(RegistrationActivity.this, "Enter your name", Toast.LENGTH_SHORT).show();
                     return;
                 }
+                if (TextUtils.isEmpty(userName)) {
+                    Toast.makeText(RegistrationActivity.this, "Enter your username", Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
-                if (TextUtils.isEmpty(ageText)) {
-                    Toast.makeText(RegistrationActivity.this, "Enter your age", Toast.LENGTH_SHORT).show();
+                if (TextUtils.isEmpty(genderText)) {
+                    Toast.makeText(RegistrationActivity.this, "Enter your gender", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -109,23 +117,56 @@ public class RegistrationActivity extends AppCompatActivity {
                         progressBar.setVisibility(View.GONE);
                         if (task.isSuccessful()) {
                             Toast.makeText(RegistrationActivity.this, "Authentication Succeeded.", Toast.LENGTH_SHORT).show();
-                            storeNewUserDate();
+                            storeNewUserDate(nameText, userName, genderText, phoneText, emailText, passwordText);
+                            storeNewUserIntoRoom(nameText, userName, genderText, phoneText, emailText, passwordText);
                             // Sign in success, update UI with the signed-in user's information
 //                                    FirebaseUser user = mAuth.getCurrentUser();
+
                         } else {
                             // If sign in fails, display a message to the user.
                             Toast.makeText(RegistrationActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
-
-
             }
         });
 
 
     }
 
-    private void storeNewUserDate() {
+    private void storeNewUserIntoRoom(String nameText, String userName, String genderText, String phoneText, String emailText, String passwordText){
+        mWordViewModel = new ViewModelProvider(this).get(WordViewModel.class);
+        User user = new User(userName, nameText, genderText, passwordText, phoneText, emailText);
+        mWordViewModel.insertUser(user);
+
+        mWordViewModel.getUserData().observe(this, words -> {
+            if (words == null) {
+                Log.d("null words", "null words");
+            }
+            if (words != null){
+                Log.d("non null words", "words exist");
+
+            }
+        });
     }
+    private void storeNewUserDate(String nameText, String userName, String genderText, String phoneText, String emailText, String passwordText) {
+        FirebaseDatabase rootNode = FirebaseDatabase.getInstance("https://carpool-project-78ad3-default-rtdb.europe-west1.firebasedatabase.app");
+        DatabaseReference reference = rootNode.getReference("Users");
+        UserHelperClass user = new UserHelperClass(nameText, userName, emailText, phoneText,passwordText, genderText);
+        reference.child(userName).setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    Toast.makeText(getApplicationContext(), "successfully inserted into database", Toast.LENGTH_SHORT).show();
+                    Log.i("success", "congrats");
+                } else {
+                    Toast.makeText(getApplicationContext(), "Failed to insert into the database", Toast.LENGTH_SHORT).show();
+                    Log.i("success", "hard luck");
+
+                }
+            }
+        });
+
+    }
+
 }
