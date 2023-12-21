@@ -10,10 +10,13 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.carpool_project.ui.dao.UserDao;
-import com.example.carpool_project.ui.dao.WordDao;
+//import com.example.carpool_project.ui.dao.WordDao;
 import com.example.carpool_project.ui.entities.User;
 import com.example.carpool_project.ui.entities.Word;
 import com.example.carpool_project.ui.helpers.RouteHelperClass;
+import com.example.carpool_project.ui.helpers.UserHelperClass;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -25,25 +28,27 @@ import java.util.List;
 
 class Repository {
 
-    private WordDao mWordDao;
+//    private WordDao mWordDao;
     private UserDao mUserDao;
     private LiveData<List<Word>> mAllWords;
     private final MutableLiveData<ArrayList<RouteHelperClass>> mAllRoutes = new MutableLiveData<>();
     private final MutableLiveData<ArrayList<RouteHelperClass>> driverTrips = new MutableLiveData<>();
     private final MutableLiveData<ArrayList<RouteHelperClass>> riderTrips = new MutableLiveData<>();
+    private final MutableLiveData<UserHelperClass> userData = new MutableLiveData<>();
+
 
     private LiveData<List<User>> mAllUsers = new MutableLiveData<List<User>>();
 
 
-    // Note that in order to unit test the WordRepository, you have to remove the Application
+        // Note that in order to unit test the WordRepository, you have to remove the Application
     // dependency. This adds complexity and much more code, and this sample is not about testing.
     // See the BasicSample in the android-architecture-components repository at
     // https://github.com/googlesamples
     Repository(Application application) {
         WordRoomDatabase db = WordRoomDatabase.getDatabase(application);
-        mWordDao = db.wordDao();
+//        mWordDao = db.wordDao();
         mUserDao = db.userDao();
-        mAllWords = mWordDao.getAlphabetizedWords();
+//        mAllWords = mWordDao.getAlphabetizedWords();
 //        mAllUsers = mWordDao.getUserInfo();
         mAllUsers = mUserDao.getAlphabetizedWords();
 
@@ -67,7 +72,7 @@ class Repository {
     // that you're not doing any long running operations on the main thread, blocking the UI.
     void insert(Word word) {
         WordRoomDatabase.databaseWriteExecutor.execute(() -> {
-            mWordDao.insert(word);
+//            mWordDao.insert(word);
         });
     }
 
@@ -160,5 +165,41 @@ class Repository {
             }
         });
         return riderTrips;
+    }
+
+    public LiveData<UserHelperClass> getUserDataFromFirebase(String uid) {
+        FirebaseDatabase rootNode = FirebaseDatabase.getInstance("https://carpool-project-78ad3-default-rtdb.europe-west1.firebasedatabase.app");
+        DatabaseReference userReference = rootNode.getReference("Users").child(uid);
+        Log.d("GET USER in repo", uid);
+        userReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+//                for (DataSnapshot route : dataSnapshot.getChildren()) {
+//                    routesList.add(route.getValue(RouteHelperClass.class));
+//                }
+                UserHelperClass userHelperClass = dataSnapshot.getValue(UserHelperClass.class);
+                userData.postValue(userHelperClass);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                // Failed to read value
+                Log.w(TAG, "Failed to read value.", error.toException());
+            }
+        });
+        return userData;
+    }
+
+    public void updateTripStatus(String routeId, String status) {
+        FirebaseDatabase rootNode = FirebaseDatabase.getInstance("https://carpool-project-78ad3-default-rtdb.europe-west1.firebasedatabase.app");
+        rootNode.getReference("Routes").child("id").child(routeId).child("status").setValue(status).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                Log.d("completed", status);
+            }
+
+        });
+
     }
 }

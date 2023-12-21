@@ -96,6 +96,8 @@
     <string name="confirm">Confirm the trip</string>
     <string name="view_your_trips">View Your Trips</string>
     <string name="fare">Fare</string>
+    <string name="trip_fare">Trip Fare</string>
+    <string name="confirm_the_trip">Confirm the trip</string>
 
 
 </resources>

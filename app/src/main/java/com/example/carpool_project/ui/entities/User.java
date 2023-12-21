@@ -17,6 +17,10 @@ public class User {
     private String name;
 
     @NonNull
+    @ColumnInfo(name = "userRole")
+    private String userRole;
+
+    @NonNull
     @ColumnInfo(name = "gender")
     private String gender;
 
@@ -33,7 +37,8 @@ public class User {
     private String email;
 
 
-    public User(@NonNull String username, @NonNull String name, @NonNull String gender, @NonNull String password, @NonNull String phoneNumber, @NonNull String email) {
+    public User(String userRole, @NonNull String username, @NonNull String name, @NonNull String gender, @NonNull String password, @NonNull String phoneNumber, @NonNull String email) {
+        this.userRole = userRole;
         this.username = username;
         this.name = name;
         this.gender = gender;
@@ -42,6 +47,14 @@ public class User {
         this.email = email;
     }
 
+    @NonNull
+    public String getUserRole() {
+        return userRole;
+    }
+
+    public void setUserRole(@NonNull String userRole) {
+        this.userRole = userRole;
+    }
     @NonNull
     public String getUsername() {
         return username;

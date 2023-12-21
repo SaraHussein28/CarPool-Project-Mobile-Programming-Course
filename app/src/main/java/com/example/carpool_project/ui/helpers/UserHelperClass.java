@@ -1,6 +1,7 @@
 package com.example.carpool_project.ui.helpers;
 
 public class UserHelperClass {
+    private String userRole;
     private String name;
     private String userName;
     private String email;
@@ -8,14 +9,23 @@ public class UserHelperClass {
     private String password;
     private String gender;
 
-
-    public UserHelperClass(String name, String userName, String email, String phoneNumber, String password, String gender) {
+    public  UserHelperClass(){}
+    public UserHelperClass(String userRole, String name, String userName, String email, String phoneNumber, String password, String gender) {
+        this.userRole = userRole;
         this.name = name;
         this.userName = userName;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.password = password;
         this.gender = gender;
+    }
+
+    public String getUserRole() {
+        return userRole;
+    }
+
+    public void setUserRole(String userRole) {
+        this.userRole = userRole;
     }
 
     public void setName(String name) {

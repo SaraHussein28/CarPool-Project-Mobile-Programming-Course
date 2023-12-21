@@ -54,7 +54,7 @@ public class DriverAddingTripsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_driver_adding_trips);
         auth = FirebaseAuth.getInstance();
         findViewsById();
-        getUserNameFromRoom();
+//        getUserNameFromRoom();
         setClickListeners();
         createArrayAdapters();
         setArrayAdapters();
@@ -178,11 +178,11 @@ public class DriverAddingTripsActivity extends AppCompatActivity {
                 }
             }
         });
-        Log.d("driver username", username[0]);
+//        Log.d("driver username", username[0]);
         DatabaseReference driverTripsReference = rootNode.getReference("DriverTrips");
         DatabaseReference driverIdReference = driverTripsReference.child("driverID");
         String newRouteId = String.valueOf(routeId -1);
-        driverIdReference.child(String.valueOf(username[0])).child(newRouteId).setValue(route).addOnCompleteListener(new OnCompleteListener<Void>() {
+        driverIdReference.child(auth.getCurrentUser().getUid()).child(newRouteId).setValue(route).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
@@ -198,40 +198,40 @@ public class DriverAddingTripsActivity extends AppCompatActivity {
 
     }
 
-    private void getUserNameFromRoom() {
-        String userEmail = auth.getCurrentUser().getEmail();
-            mWordViewModel = new ViewModelProvider(this).get(WordViewModel.class);
-            mWordViewModel.getUserData(userEmail).observe(this, words -> {
-                if (words == null) {
-                    Log.d("null words - driver main ", "null words - driver");
-                }
-                if (words != null){
-                    Log.d("word info  - driver ", words.getEmail());
-                    username[0] = words.getUsername();
-                }
-            });
-    }
+//    private void getUserNameFromRoom() {
+//        String userEmail = auth.getCurrentUser().getEmail();
+//            mWordViewModel = new ViewModelProvider(this).get(WordViewModel.class);
+//            mWordViewModel.getUserData(userEmail).observe(this, words -> {
+//                if (words == null) {
+//                    Log.d("null words - driver main ", "null words - driver");
+//                }
+//                if (words != null){
+//                    Log.d("word info  - driver ", words.getEmail());
+//                    username[0] = words.getUsername();
+//                }
+//            });
+//    }
 
 
-    private void storeNewUserDate(String nameText, String userName, String genderText, String phoneText, String emailText, String passwordText) {
-        FirebaseDatabase rootNode = FirebaseDatabase.getInstance("https://carpool-project-78ad3-default-rtdb.europe-west1.firebasedatabase.app");
-        DatabaseReference reference = rootNode.getReference("Users");
-
-        UserHelperClass user = new UserHelperClass(nameText, userName, emailText, phoneText, passwordText, genderText);
-        reference.child(userName).setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()) {
-                    Toast.makeText(getApplicationContext(), "successfully inserted into database", Toast.LENGTH_SHORT).show();
-                    Log.i("success", "congrats");
-                } else {
-                    Toast.makeText(getApplicationContext(), "Failed to insert into the database", Toast.LENGTH_SHORT).show();
-                    Log.i("success", "hard luck");
-
-                }
-            }
-        });
-    }
+//    private void storeNewUserDate(String nameText, String userName, String genderText, String phoneText, String emailText, String passwordText) {
+//        FirebaseDatabase rootNode = FirebaseDatabase.getInstance("https://carpool-project-78ad3-default-rtdb.europe-west1.firebasedatabase.app");
+//        DatabaseReference reference = rootNode.getReference("Users");
+//
+//        UserHelperClass user = new UserHelperClass(nameText, userName, emailText, phoneText, passwordText, genderText);
+//        reference.child(userName).setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
+//            @Override
+//            public void onComplete(@NonNull Task<Void> task) {
+//                if (task.isSuccessful()) {
+//                    Toast.makeText(getApplicationContext(), "successfully inserted into database", Toast.LENGTH_SHORT).show();
+//                    Log.i("success", "congrats");
+//                } else {
+//                    Toast.makeText(getApplicationContext(), "Failed to insert into the database", Toast.LENGTH_SHORT).show();
+//                    Log.i("success", "hard luck");
+//
+//                }
+//            }
+//        });
+//    }
 
     private void createArrayAdapters() {
         datesArrayAdapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.list_item, datesList);

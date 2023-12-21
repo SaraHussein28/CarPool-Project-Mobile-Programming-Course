@@ -9,17 +9,17 @@ import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.example.carpool_project.ui.dao.UserDao;
-import com.example.carpool_project.ui.dao.WordDao;
+//import com.example.carpool_project.ui.dao.WordDao;
 import com.example.carpool_project.ui.entities.User;
 import com.example.carpool_project.ui.entities.Word;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {Word.class, User.class}, version = 2, exportSchema = false)
+@Database(entities = {Word.class, User.class}, version = 3, exportSchema = false)
 public abstract class WordRoomDatabase extends RoomDatabase {
 
-    public abstract WordDao wordDao();
+//    public abstract WordDao wordDao();
     public abstract UserDao userDao();
 
 
@@ -53,17 +53,17 @@ public abstract class WordRoomDatabase extends RoomDatabase {
             databaseWriteExecutor.execute(() -> {
                 // Populate the database in the background.
                 // If you want to start with more words, just add them.
-                WordDao dao = INSTANCE.wordDao();
-                dao.deleteAll();
-
-                Word word = new Word("userName", "nameText", "genderText", "passwordText", "phoneText", "emailText");
-                dao.insert(word);
+//                WordDao dao = INSTANCE.wordDao();
+//                dao.deleteAll();
+//
+//                Word word = new Word("userName", "nameText", "genderText", "passwordText", "phoneText", "emailText");
+//                dao.insert(word);
 
 
                 UserDao userDao = INSTANCE.userDao();
                 userDao.deleteAll();
 
-                User user = new User("userName",
+                User user = new User("selectedUserRole", "userName",
                         "nameText",
                         "genderText",
                         "passwordText",

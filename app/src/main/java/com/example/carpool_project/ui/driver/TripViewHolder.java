@@ -11,6 +11,8 @@ import com.example.carpool_project.R;
 import com.example.carpool_project.ui.helpers.RouteHelperClass;
 import com.example.carpool_project.ui.trip_details.TripActivity;
 
+import java.text.BreakIterator;
+
 public class TripViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
     private final TextView pickUpTimeTextView;
@@ -20,6 +22,7 @@ public class TripViewHolder extends RecyclerView.ViewHolder implements View.OnCl
     private final TextView tripStatus;
     private final TextView tripFare;
     private final TextView date;
+    private  String routeId;
 
     public TripViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -43,6 +46,7 @@ public class TripViewHolder extends RecyclerView.ViewHolder implements View.OnCl
         tripStatus.setText(character.getStatus());
         tripFare.setText(character.getPrice());
         date.setText(character.getDay());
+        routeId = character.getRouteId();
     }
 
     @Override
@@ -50,7 +54,7 @@ public class TripViewHolder extends RecyclerView.ViewHolder implements View.OnCl
         if (view.getId() == itemView.getId()){
 
             //TODO: change the navigation here.
-            Intent intent = new Intent(itemView.getContext(), TripActivity.class);
+            Intent intent = new Intent(itemView.getContext(), TripStatusChangeActivity.class);
             intent.putExtra("source", sourcePointTextView.getText());
             intent.putExtra("destination", destinationPointTextView.getText());
             intent.putExtra("drop_off_time", dropOffTimeTextView.getText());
@@ -58,6 +62,7 @@ public class TripViewHolder extends RecyclerView.ViewHolder implements View.OnCl
             intent.putExtra("status", tripStatus.getText());
             intent.putExtra("price", tripFare.getText());
             intent.putExtra("date", date.getText());
+            intent.putExtra("route_id", routeId);
             itemView.getContext().startActivity(intent);
 
         }

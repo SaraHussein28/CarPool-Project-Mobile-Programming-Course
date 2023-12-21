@@ -22,32 +22,33 @@ public class DriverTripsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_driver_trips);
         auth = FirebaseAuth.getInstance();
-        getUserNameFromRoom();
+//        getUserNameFromRoom();
+        RetrieveTripsData();
     }
 
     private void RetrieveTripsData() {
         RecyclerView recyclerView = findViewById(R.id.recyclerView00);
         mWordViewModel = new ViewModelProvider(this).get(WordViewModel.class);
-        Log.d("username is here ",  username[0]);
-        mWordViewModel.getDriverTrips(username[0]).observe(this, words -> {
+        Log.d("username is here ", auth.getCurrentUser().getUid() );
+        mWordViewModel.getDriverTrips(auth.getCurrentUser().getUid()).observe(this, words -> {
             // Update the cached copy of the words in the adapter.
             TripAdapter tripAdapter = new TripAdapter(words);
             recyclerView.setAdapter(tripAdapter);
         });
     }
 
-    private void getUserNameFromRoom() {
-        String userEmail = auth.getCurrentUser().getEmail();
-        mWordViewModel = new ViewModelProvider(this).get(WordViewModel.class);
-        mWordViewModel.getUserData(userEmail).observe(this, words -> {
-            if (words == null) {
-                Log.d("null words - driver main ", "null words - driver");
-            }
-            if (words != null){
-                Log.d("word info  - driver ", words.getEmail());
-                username[0] = words.getUsername();
-                RetrieveTripsData();
-            }
-        });
-    }
+//    private void getUserNameFromRoom() {
+//        String userEmail = auth.getCurrentUser().getEmail();
+//        mWordViewModel = new ViewModelProvider(this).get(WordViewModel.class);
+//        mWordViewModel.getUserData(userEmail).observe(this, words -> {
+//            if (words == null) {
+//                Log.d("null words - driver main ", "null words - driver");
+//            }
+//            if (words != null){
+//                Log.d("word info  - driver ", words.getEmail());
+//                username[0] = words.getUsername();
+//                RetrieveTripsData();
+//            }
+//        });
+//    }
 }

@@ -1,8 +1,5 @@
 package com.example.carpool_project.ui.login;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -12,11 +9,16 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
+
+import com.example.carpool_project.R;
+import com.example.carpool_project.ui.database.WordViewModel;
 import com.example.carpool_project.ui.driver.DriverHomeActivity;
+import com.example.carpool_project.ui.registration.RegistrationActivity;
 import com.example.carpool_project.ui.rider_entry.FirstActivity;
 import com.example.carpool_project.ui.sign_out.MainActivity;
-import com.example.carpool_project.R;
-import com.example.carpool_project.ui.registration.RegistrationActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
@@ -26,11 +28,15 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class LoginActivity extends AppCompatActivity {
 
+    private final String DRIVER_ROLE = "Driver";
+    private final String RIDER_ROLE = "Rider";
+    private WordViewModel mWordViewModel;
     TextInputEditText editTextEmail, editTextPassword;
     Button buttonLogin;
     FirebaseAuth mAuth;
     ProgressBar progressBar;
     TextView signUpText;
+    final String[] userRole = new String[1];
 
     @Override
     public void onStart() {
@@ -91,9 +97,8 @@ public class LoginActivity extends AppCompatActivity {
                                 if (task.isSuccessful()) {
                                     Toast.makeText(LoginActivity.this, "Login succeeded",
                                             Toast.LENGTH_SHORT).show();
-                                    Intent intent = new Intent(getApplicationContext(), FirstActivity.class);
-                                    startActivity(intent);
-                                    finish();
+
+                                    findUserRole(mAuth);
                                     // Sign in success, update UI with the signed-in user's information
                                     // FirebaseUser user = mAuth.getCurrentUser();
                                 } else {
@@ -108,5 +113,26 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void navigateNextActivity(String userRole) {
+        if (userRole.equals(DRIVER_ROLE)) {
+            Intent intent = new Intent(getApplicationContext(), DriverHomeActivity.class);
+            startActivity(intent);
+            finish();
+        } else if (userRole.equals(RIDER_ROLE)) {
+            Intent intent = new Intent(getApplicationContext(), FirstActivity.class);
+            startActivity(intent);
+            finish();
+        }
+    }
+
+    private void findUserRole(FirebaseAuth mAuth) {
+
+        mWordViewModel = new ViewModelProvider(this).get(WordViewModel.class);
+        mWordViewModel.getUserDataFromFirebase(mAuth.getCurrentUser().getUid()).observe(this, words -> {
+            userRole[0] = words.getUserRole();
+            navigateNextActivity(userRole[0]);
+        });
     }
 }
