@@ -17,10 +17,12 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.carpool_project.databinding.FragmentCartFramentBinding;
+import com.example.carpool_project.ui.database.WordViewModel;
 import com.example.carpool_project.ui.helpers.RouteHelperClass;
 import com.example.carpool_project.ui.helpers.TripHelperClass;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -34,8 +36,13 @@ public class CartFragment extends Fragment {
     private Button proceedButton;
     private CartFramentViewModel mViewModel;
     private FragmentCartFramentBinding binding;
-    private final String PENDING = "Pending";
     String source, destination, pickUpTime, dropOffTime, trip_fare, date, status;
+    private String routeId;
+    private WordViewModel mWordViewModel;
+    final String[] username = {""};
+
+    FirebaseAuth auth;
+
 
 
     public static CartFragment newInstance() {
@@ -51,6 +58,7 @@ public class CartFragment extends Fragment {
         View root = binding.getRoot();
         initViews();
         updateViews();
+        getUserNameFromRoom();
         addClickListeners();
         return root;
     }
@@ -60,35 +68,46 @@ public class CartFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 // store
-                status = PENDING;
-
                 storeRideIntoDatabase(source, destination, pickUpTime, dropOffTime, trip_fare, date, status);
-                // make tranision
+                // make transition.
 
             }
         });
     }
 
+
+    private void getUserNameFromRoom() {
+        auth = FirebaseAuth.getInstance();
+        String userEmail = auth.getCurrentUser().getEmail();
+        mWordViewModel = new ViewModelProvider(this).get(WordViewModel.class);
+        mWordViewModel.getUserData(userEmail).observe(getViewLifecycleOwner(), words -> {
+            if (words == null) {
+                Log.d("null words - rider main ", "null words - rider");
+            }
+            if (words != null){
+                Log.d("word info  - rider ", words.getEmail());
+                username[0] = words.getUsername();
+            }
+        });
+    }
     private void storeRideIntoDatabase(String source, String destination, String pickUpTime, String dropOffTime, String trip_fare, String date, String status) {
+        RouteHelperClass route = new RouteHelperClass(routeId, status, source, destination, date, pickUpTime, dropOffTime, trip_fare);
+        FirebaseDatabase rootNode = FirebaseDatabase.getInstance("https://carpool-project-78ad3-default-rtdb.europe-west1.firebasedatabase.app");
+        DatabaseReference driverTripsReference = rootNode.getReference("RiderTrips");
+        DatabaseReference driverIdReference = driverTripsReference.child("riderID");
+        driverIdReference.child(String.valueOf(username[0])).child(routeId).setValue(route).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    Toast.makeText(getActivity(), "successfully inserted into database", Toast.LENGTH_SHORT).show();
+                    Log.i("success", "congrats");
+                } else {
+                    Toast.makeText(getActivity(), "Failed to insert into the database", Toast.LENGTH_SHORT).show();
+                    Log.i("success", "hard luck");
 
-//        TripHelperClass trip = new TripHelperClass(source, destination, date, pickUpTime, dropOffTime, trip_fare, status);
-//        FirebaseDatabase rootNode = FirebaseDatabase.getInstance("https://carpool-project-78ad3-default-rtdb.europe-west1.firebasedatabase.app");
-//        DatabaseReference routesReference = rootNode.getReference("trips");
-//        DatabaseReference routeIdReference = routesReference.child("id");
-//        routeIdReference.child(String.valueOf(routeId++)).setValue(trip).addOnCompleteListener(new OnCompleteListener<Void>() {
-//            @Override
-//            public void onComplete(@NonNull Task<Void> task) {
-//                if (task.isSuccessful()) {
-//                    Toast.makeText(getActivity(), "successfully inserted into database", Toast.LENGTH_SHORT).show();
-//                    Log.i("success", "congrats");
-//                } else {
-//                    Toast.makeText(getActivity(), "Failed to insert into the database", Toast.LENGTH_SHORT).show();
-//                    Log.i("success", "hard luck");
-//
-//                }
-//            }
-//        });
-
+                }
+            }
+        });
     }
 
 
@@ -100,9 +119,10 @@ public class CartFragment extends Fragment {
             destination = sharedPref.getString("destination", "default");
             pickUpTime = sharedPref.getString("pick_up_time", "default");
             dropOffTime = sharedPref.getString("drop_off_time", "default");
+            status = sharedPref.getString("status", "default");
             trip_fare = sharedPref.getString("price", "default");
             date = sharedPref.getString("date", "default");
-
+            routeId = sharedPref.getString("route_id", "default");
             pickUpTimeTextView.setText(pickUpTime);
             dropOffTimeTextView.setText(dropOffTime);
             sourcePointTextView.setText(source);

@@ -31,11 +31,17 @@ public class WordViewModel extends AndroidViewModel {
     public LiveData<List<Word>> getAllWords() { return mAllWords; }
 
     public LiveData<ArrayList<RouteHelperClass>> getAllRoutes() { return mAllRoutes; }
-//    public LiveData<List<UserHelperClass>> getUserData(String userID) { return mRepository.getUserData(userID); }
+    public LiveData<ArrayList<RouteHelperClass>> getDriverTrips(String driverID) { return mRepository.getDriverTrips(driverID); }
+
+    public LiveData<ArrayList<RouteHelperClass>> getRiderTrips(String riderID) {
+        return mRepository.getRiderTrips(riderID);
+    }
+    //    public LiveData<List<UserHelperClass>> getUserData(String userID) { return mRepository.getUserData(userID); }
     public LiveData<List<User>> getUserData() { return mALllUsers; }
     public LiveData<User> getUserData(String userEmail) { return mRepository.getUserData(userEmail); }
 
     public void insert(Word word) { mRepository.insert(word); }
     public void insertUser(User user) { mRepository.insertUser(user); }
+
 
 }

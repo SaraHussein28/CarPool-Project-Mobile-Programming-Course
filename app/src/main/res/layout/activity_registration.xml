@@ -181,6 +181,29 @@
             app:layout_constraintTop_toBottomOf="@id/textView05"
             tools:ignore="RtlSymmetry" />
 
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayout00"
+            android:layout_width="125dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="29dp"
+            android:layout_marginTop="30dp"
+            android:paddingStart="15dp"
+            android:background="@drawable/txt_back"
+
+            android:hint="Rider"
+            android:layout_marginBottom="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/editText04"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+
+            <AutoCompleteTextView
+                android:id="@+id/autoCompleteTextView00"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
         <TextView
             android:id="@+id/textView08"
             android:layout_width="wrap_content"
@@ -227,7 +250,6 @@
             android:id="@+id/button00"
             android:layout_width="210dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="165dp"
             android:backgroundTint="#0F6CB6"
             android:text="@string/register"
             android:textColor="#FFFFFF"
@@ -236,7 +258,7 @@
             app:cornerRadius="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textView04" />
+            app:layout_constraintTop_toBottomOf="@id/textInputLayout00" />
 
         <TextView
             android:id="@+id/textView06"

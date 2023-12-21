@@ -12,8 +12,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.carpool_project.ui.driver.DriverMainActivity;
-import com.example.carpool_project.ui.driver.DriverTrips;
+import com.example.carpool_project.ui.driver.DriverHomeActivity;
 import com.example.carpool_project.ui.rider_entry.FirstActivity;
 import com.example.carpool_project.ui.sign_out.MainActivity;
 import com.example.carpool_project.R;
@@ -92,7 +91,7 @@ public class LoginActivity extends AppCompatActivity {
                                 if (task.isSuccessful()) {
                                     Toast.makeText(LoginActivity.this, "Login succeeded",
                                             Toast.LENGTH_SHORT).show();
-                                    Intent intent = new Intent(getApplicationContext(), DriverTrips.class);
+                                    Intent intent = new Intent(getApplicationContext(), FirstActivity.class);
                                     startActivity(intent);
                                     finish();
                                     // Sign in success, update UI with the signed-in user's information

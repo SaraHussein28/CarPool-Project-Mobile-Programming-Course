@@ -23,6 +23,8 @@ public class TripActivity extends AppCompatActivity {
     private TextView priceTextView;
     private Button addToCartButton;
     private String date;
+    private String routeId;
+    private String status;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,8 +61,10 @@ public class TripActivity extends AppCompatActivity {
         editor.putString("destination", destinationPointTextView.getText().toString());
         editor.putString("pick_up_time", pickUpTimeTextView.getText().toString());
         editor.putString("drop_off_time", dropOffTimeTextView.getText().toString());
+        editor.putString("status", status);
         editor.putString("price", priceTextView.getText().toString());
         editor.putString("date", date);
+        editor.putString("route_id", routeId);
 //        cartFragment.setArguments(trip_args);
         editor.apply();
 //        fragT.replace(R.id.nav_host_fragment_content_first, cartFragment);
@@ -74,7 +78,8 @@ public class TripActivity extends AppCompatActivity {
         String dropOffTime = getIntent().getStringExtra("drop_off_time");
         String tripFare = getIntent().getStringExtra("price");
         date = getIntent().getStringExtra("date");
-
+        routeId = getIntent().getStringExtra("route_id");
+        status = getIntent().getStringExtra("status");
         sourcePointTextView.setText(sourcePoint);
         destinationPointTextView.setText(destinationPoint);
         pickUpTimeTextView.setText(pickUpTime);

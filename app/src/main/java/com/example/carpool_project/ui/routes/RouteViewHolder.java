@@ -19,6 +19,8 @@ public class RouteViewHolder extends RecyclerView.ViewHolder implements View.OnC
     private final TextView destinationPointTextView;
     private String tripFare;
     private String date;
+    private String routeId;
+    private String status;
 
     public RouteViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -35,8 +37,10 @@ public class RouteViewHolder extends RecyclerView.ViewHolder implements View.OnC
         dropOffTimeTextView.setText(character.getDropOffTime());
         sourcePointTextView.setText(character.getSource());
         destinationPointTextView.setText(character.getDestination());
+        status = character.getStatus();
         tripFare = character.getPrice();
         date = character.getDay();
+        routeId = character.getRouteId();
     }
 
     @Override
@@ -50,6 +54,8 @@ public class RouteViewHolder extends RecyclerView.ViewHolder implements View.OnC
             intent.putExtra("pick_up_time", pickUpTimeTextView.getText());
             intent.putExtra("price", tripFare);
             intent.putExtra("date", date);
+            intent.putExtra("route_id", routeId);
+            intent.putExtra("status", status);
             itemView.getContext().startActivity(intent);
 
         }

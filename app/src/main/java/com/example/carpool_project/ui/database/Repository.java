@@ -14,14 +14,12 @@ import com.example.carpool_project.ui.dao.WordDao;
 import com.example.carpool_project.ui.entities.User;
 import com.example.carpool_project.ui.entities.Word;
 import com.example.carpool_project.ui.helpers.RouteHelperClass;
-import com.example.carpool_project.ui.helpers.UserHelperClass;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,6 +29,9 @@ class Repository {
     private UserDao mUserDao;
     private LiveData<List<Word>> mAllWords;
     private final MutableLiveData<ArrayList<RouteHelperClass>> mAllRoutes = new MutableLiveData<>();
+    private final MutableLiveData<ArrayList<RouteHelperClass>> driverTrips = new MutableLiveData<>();
+    private final MutableLiveData<ArrayList<RouteHelperClass>> riderTrips = new MutableLiveData<>();
+
     private LiveData<List<User>> mAllUsers = new MutableLiveData<List<User>>();
 
 
@@ -111,5 +112,53 @@ class Repository {
         WordRoomDatabase.databaseWriteExecutor.execute(() -> {
             mUserDao.insert(user);
         });
+    }
+
+    public MutableLiveData<ArrayList<RouteHelperClass>> getDriverTrips(String driverID) {
+        ArrayList<RouteHelperClass> routesList = new ArrayList<>();
+
+        FirebaseDatabase rootNode = FirebaseDatabase.getInstance("https://carpool-project-78ad3-default-rtdb.europe-west1.firebasedatabase.app");
+        DatabaseReference driverReference = rootNode.getReference("DriverTrips").child("driverID").child(driverID);
+        driverReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                for (DataSnapshot route : dataSnapshot.getChildren()) {
+                    routesList.add(route.getValue(RouteHelperClass.class));
+                }
+                driverTrips.postValue(routesList);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                // Failed to read value
+                Log.w(TAG, "Failed to read value.", error.toException());
+            }
+        });
+        return driverTrips;
+    }
+
+    public LiveData<ArrayList<RouteHelperClass>> getRiderTrips(String riderID) {
+        ArrayList<RouteHelperClass> routesList = new ArrayList<>();
+
+        FirebaseDatabase rootNode = FirebaseDatabase.getInstance("https://carpool-project-78ad3-default-rtdb.europe-west1.firebasedatabase.app");
+        DatabaseReference driverReference = rootNode.getReference("RiderTrips").child("riderID").child(riderID);
+        driverReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                for (DataSnapshot route : dataSnapshot.getChildren()) {
+                    routesList.add(route.getValue(RouteHelperClass.class));
+                }
+                riderTrips.postValue(routesList);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                // Failed to read value
+                Log.w(TAG, "Failed to read value.", error.toException());
+            }
+        });
+        return riderTrips;
     }
 }

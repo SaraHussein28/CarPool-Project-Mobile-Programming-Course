@@ -29,7 +29,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.time.LocalTime;
 import java.util.Objects;
 
-public class DriverMainActivity extends AppCompatActivity {
+public class DriverAddingTripsActivity extends AppCompatActivity {
     private final String FACULTY_POINT = "ASU, Faculty of Engineering - Gate 3";
     private final String MORNING_RIDE_TIME = "7:30 am";
     private final String EVENING_RIDE_TIME = "5:30 pm";
@@ -51,7 +51,7 @@ public class DriverMainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_driver_main);
+        setContentView(R.layout.activity_driver_adding_trips);
         auth = FirebaseAuth.getInstance();
         findViewsById();
         getUserNameFromRoom();
@@ -76,7 +76,7 @@ public class DriverMainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String item = parent.getItemAtPosition(position).toString();
                 selectedDate = item;
-                Toast.makeText(DriverMainActivity.this, "Item " + item, Toast.LENGTH_SHORT).show();
+                Toast.makeText(DriverAddingTripsActivity.this, "Item " + item, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -85,7 +85,7 @@ public class DriverMainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String item = parent.getItemAtPosition(position).toString();
                 selectedDurationMin = item;
-                Toast.makeText(DriverMainActivity.this, "Item " + item, Toast.LENGTH_SHORT).show();
+                Toast.makeText(DriverAddingTripsActivity.this, "Item " + item, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -94,7 +94,7 @@ public class DriverMainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String item = parent.getItemAtPosition(position).toString();
                 selectedSource = item;
-                Toast.makeText(DriverMainActivity.this, "Item " + item, Toast.LENGTH_SHORT).show();
+                Toast.makeText(DriverAddingTripsActivity.this, "Item " + item, Toast.LENGTH_SHORT).show();
             }
         });
         destinationAutoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -102,7 +102,7 @@ public class DriverMainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String item = parent.getItemAtPosition(position).toString();
                 selectedDestination = item;
-                Toast.makeText(DriverMainActivity.this, "Item " + item, Toast.LENGTH_SHORT).show();
+                Toast.makeText(DriverAddingTripsActivity.this, "Item " + item, Toast.LENGTH_SHORT).show();
             }
         });
         imageView.setOnClickListener(new View.OnClickListener() {
@@ -124,23 +124,23 @@ public class DriverMainActivity extends AppCompatActivity {
                 int durationMinute = (Integer.parseInt(selectedDurationMin) + 30) % 60;
                 LocalTime dropOffLocalTime = LocalTime.now();
                 if (TextUtils.isEmpty(selectedDate)) {
-                    Toast.makeText(DriverMainActivity.this, "Enter the trip date", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(DriverAddingTripsActivity.this, "Enter the trip date", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (TextUtils.isEmpty(selectedDurationMin)) {
-                    Toast.makeText(DriverMainActivity.this, "Enter the trip duration", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(DriverAddingTripsActivity.this, "Enter the trip duration", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (TextUtils.isEmpty(selectedSource)) {
-                    Toast.makeText(DriverMainActivity.this, "Enter the start point", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(DriverAddingTripsActivity.this, "Enter the start point", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (TextUtils.isEmpty(selectedDestination)) {
-                    Toast.makeText(DriverMainActivity.this, "Enter your destination", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(DriverAddingTripsActivity.this, "Enter your destination", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (TextUtils.isEmpty(price)) {
-                    Toast.makeText(DriverMainActivity.this, "Enter your destination", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(DriverAddingTripsActivity.this, "Enter your destination", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (Objects.equals(selectedDestination, FACULTY_POINT)) {
@@ -182,7 +182,7 @@ public class DriverMainActivity extends AppCompatActivity {
         DatabaseReference driverTripsReference = rootNode.getReference("DriverTrips");
         DatabaseReference driverIdReference = driverTripsReference.child("driverID");
         String newRouteId = String.valueOf(routeId -1);
-        driverIdReference.child(String.valueOf(username[0])).child(newRouteId).setValue(PENDING).addOnCompleteListener(new OnCompleteListener<Void>() {
+        driverIdReference.child(String.valueOf(username[0])).child(newRouteId).setValue(route).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {

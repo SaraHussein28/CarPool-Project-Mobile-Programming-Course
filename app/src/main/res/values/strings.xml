@@ -88,12 +88,14 @@
     <string name="enter_your_gender">Enter your gender</string>
     <string name="username">Username</string>
     <string name="enter_your_username">Enter your username</string>
-    <string name="add_ride">Add ride</string>
+    <string name="add_ride">Add New Ride</string>
     <string name="add_ride_text">Let\'s add a new ride!</string>
     <string name="my_cart">My Cart</string>
     <string name="my_trips">My trips</string>
     <string name="payment">Payment</string>
     <string name="confirm">Confirm the trip</string>
+    <string name="view_your_trips">View Your Trips</string>
+    <string name="fare">Fare</string>
 
 
 </resources>
