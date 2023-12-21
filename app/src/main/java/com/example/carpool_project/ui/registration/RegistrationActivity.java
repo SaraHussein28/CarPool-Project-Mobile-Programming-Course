@@ -1,4 +1,4 @@
-package com.example.carpool_project;
+package com.example.carpool_project.ui.registration;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,7 +15,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.carpool_project.ui.UserDao;
+import com.example.carpool_project.ui.sign_out.MainActivity;
+import com.example.carpool_project.R;
+import com.example.carpool_project.ui.entities.User;
+import com.example.carpool_project.ui.helpers.UserHelperClass;
+import com.example.carpool_project.ui.database.WordViewModel;
+import com.example.carpool_project.ui.login.LoginActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;

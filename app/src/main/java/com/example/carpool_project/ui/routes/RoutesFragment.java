@@ -7,26 +7,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.carpool_project.Character;
-import com.example.carpool_project.CharacterAdapter;
-import com.example.carpool_project.RouteHelperClass;
-import com.example.carpool_project.WordViewModel;
+import com.example.carpool_project.ui.helpers.RouteHelperClass;
+import com.example.carpool_project.ui.database.WordViewModel;
 import com.example.carpool_project.databinding.FragmentRoutesBinding;
-import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -54,9 +44,8 @@ public class RoutesFragment extends Fragment {
         mWordViewModel = new ViewModelProvider(this).get(WordViewModel.class);
         mWordViewModel.getAllRoutes().observe(getViewLifecycleOwner(), words -> {
             // Update the cached copy of the words in the adapter.
-            CharacterAdapter characterAdapter = new CharacterAdapter(words);
-            recyclerView.setAdapter(characterAdapter);
-
+            RouteAdapter routeAdapter = new RouteAdapter(words);
+            recyclerView.setAdapter(routeAdapter);
         });
 
 //        final TextView textView = binding.textGallery;
@@ -65,6 +54,7 @@ public class RoutesFragment extends Fragment {
         return root;
     }
 
+    // move this to the trip details activity. when clicking on the add to cart button, add a check for the time to validate the time.
     private List<Character> filterResults(List<Character> characters, String source, String destination, String time) {
         List<Character> filteredCharacters = new ArrayList<>();
 
@@ -92,9 +82,9 @@ public class RoutesFragment extends Fragment {
         binding = null;
     }
 
-    private RouteHelperClass createNewRoute(DataSnapshot route) {
-        Log.d(TAG, "here is the source" + route.child("source").getValue().toString());
-        RouteHelperClass routeHelperClass = new RouteHelperClass(route.child("source").getValue().toString(), route.child("destination").getValue().toString(), route.child("day").getValue().toString(), route.child("pickupTime").getValue().toString(), route.child("dropOffTime").getValue().toString(), route.child("price").getValue().toString());
-        return routeHelperClass;
-    }
+//    private RouteHelperClass createNewRoute(DataSnapshot route) {
+//        Log.d(TAG, "here is the source" + route.child("source").getValue().toString());
+//        RouteHelperClass routeHelperClass = new RouteHelperClass(route.child("source").getValue().toString(), route.child("destination").getValue().toString(), route.child("day").getValue().toString(), route.child("pickupTime").getValue().toString(), route.child("dropOffTime").getValue().toString(), route.child("price").getValue().toString());
+//        return routeHelperClass;
+//    }
 }

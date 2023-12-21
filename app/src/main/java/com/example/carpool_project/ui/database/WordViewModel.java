@@ -1,16 +1,20 @@
-package com.example.carpool_project;
+package com.example.carpool_project.ui.database;
 
 import android.app.Application;
 
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
+import com.example.carpool_project.ui.entities.User;
+import com.example.carpool_project.ui.entities.Word;
+import com.example.carpool_project.ui.helpers.RouteHelperClass;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class WordViewModel extends AndroidViewModel {
 
-    private WordRepository mRepository;
+    private Repository mRepository;
 
     private final LiveData<List<Word>> mAllWords;
     private final LiveData<ArrayList<RouteHelperClass>> mAllRoutes;
@@ -18,7 +22,7 @@ public class WordViewModel extends AndroidViewModel {
 
     public WordViewModel (Application application) {
         super(application);
-        mRepository = new WordRepository(application);
+        mRepository = new Repository(application);
         mAllRoutes = mRepository.getAllRoutes();
         mAllWords = mRepository.getAllWords();
         mALllUsers = mRepository.getUserData();

@@ -1,4 +1,4 @@
-package com.example.carpool_project;
+package com.example.carpool_project.ui.driver;
 
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -14,9 +14,15 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
+import com.example.carpool_project.R;
+import com.example.carpool_project.ui.database.WordViewModel;
+import com.example.carpool_project.ui.helpers.RouteHelperClass;
+import com.example.carpool_project.ui.helpers.UserHelperClass;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -27,6 +33,7 @@ public class DriverMainActivity extends AppCompatActivity {
     private final String FACULTY_POINT = "ASU, Faculty of Engineering - Gate 3";
     private final String MORNING_RIDE_TIME = "7:30 am";
     private final String EVENING_RIDE_TIME = "5:30 pm";
+    private final String PENDING = "Pending", COMPLETED = "Completed", Confirmed = "Confirmed";
     String[] datesList = {"Now", "tomorrow", "Dec 3", "Dec 4", "Dec 5"};
     String[] durationList = {"10", "20", "30", "40", "60", "80", "100", "120"};
     String[] districtNames = {"Maadi", "Nasr City", "Zamalek", "Mohandseen", "Abassia Square", "ASU, Faculty of Engineering - Gate 3"};
@@ -36,13 +43,18 @@ public class DriverMainActivity extends AppCompatActivity {
     ArrayAdapter<String> datesArrayAdapter, durationArrayAdapter, districtArrayAdapter;
     ImageView imageView;
     Button submitButton;
+    FirebaseAuth auth;
+    private WordViewModel mWordViewModel;
+    final String[] username = {""};
     private static int routeId = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_driver_main);
+        auth = FirebaseAuth.getInstance();
         findViewsById();
+        getUserNameFromRoom();
         setClickListeners();
         createArrayAdapters();
         setArrayAdapters();
@@ -142,13 +154,14 @@ public class DriverMainActivity extends AppCompatActivity {
                     dropOffTime = dropOffLocalTime.toString() + " pm";
                 }
                 storeNewRouteData(selectedDate, pickUpTime, dropOffTime, selectedSource, selectedDestination, price);
+                finish();
             }
         });
 
     }
 
     private void storeNewRouteData(String selectedDate, String pickUpTime, String dropOffTime, String selectedSource, String selectedDestination, String price) {
-        RouteHelperClass route = new RouteHelperClass(selectedSource, selectedDestination, selectedDate, pickUpTime, dropOffTime, price);
+        RouteHelperClass route = new RouteHelperClass(String.valueOf(routeId), PENDING, selectedSource, selectedDestination, selectedDate, pickUpTime, dropOffTime, price);
         FirebaseDatabase rootNode = FirebaseDatabase.getInstance("https://carpool-project-78ad3-default-rtdb.europe-west1.firebasedatabase.app");
         DatabaseReference routesReference = rootNode.getReference("Routes");
         DatabaseReference routeIdReference = routesReference.child("id");
@@ -165,7 +178,38 @@ public class DriverMainActivity extends AppCompatActivity {
                 }
             }
         });
+        Log.d("driver username", username[0]);
+        DatabaseReference driverTripsReference = rootNode.getReference("DriverTrips");
+        DatabaseReference driverIdReference = driverTripsReference.child("driverID");
+        String newRouteId = String.valueOf(routeId -1);
+        driverIdReference.child(String.valueOf(username[0])).child(newRouteId).setValue(PENDING).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    Toast.makeText(getApplicationContext(), "successfully inserted into database", Toast.LENGTH_SHORT).show();
+                    Log.i("success", "congrats");
+                } else {
+                    Toast.makeText(getApplicationContext(), "Failed to insert into the database", Toast.LENGTH_SHORT).show();
+                    Log.i("success", "hard luck");
 
+                }
+            }
+        });
+
+    }
+
+    private void getUserNameFromRoom() {
+        String userEmail = auth.getCurrentUser().getEmail();
+            mWordViewModel = new ViewModelProvider(this).get(WordViewModel.class);
+            mWordViewModel.getUserData(userEmail).observe(this, words -> {
+                if (words == null) {
+                    Log.d("null words - driver main ", "null words - driver");
+                }
+                if (words != null){
+                    Log.d("word info  - driver ", words.getEmail());
+                    username[0] = words.getUsername();
+                }
+            });
     }
 
 

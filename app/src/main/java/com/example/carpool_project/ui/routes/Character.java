@@ -1,4 +1,4 @@
-package com.example.carpool_project;
+package com.example.carpool_project.ui.routes;
 
 public class Character {
     private final String sourcePoint;

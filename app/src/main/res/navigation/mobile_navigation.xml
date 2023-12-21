@@ -25,17 +25,17 @@
     <fragment
         android:id="@+id/nav_trips"
         android:name="com.example.carpool_project.ui.mytrips.MyTripsFragment"
-        android:label="@string/menu_profile"
+        android:label="@string/my_trips"
         tools:layout="@layout/fragment_my_trips" />
     <fragment
         android:id="@+id/nav_payment"
         android:name="com.example.carpool_project.ui.payment.PaymentFragment"
-        android:label="@string/menu_profile"
+        android:label="@string/payment"
         tools:layout="@layout/fragment_payment" />
     <fragment
         android:id="@+id/nav_cart"
-        android:name="com.example.carpool_project.ui.cart.CartFrament"
-        android:label="@string/menu_profile"
+        android:name="com.example.carpool_project.ui.cart.CartFragment"
+        android:label="@string/my_cart"
         tools:layout="@layout/fragment_cart_frament" />
 
 </navigation>

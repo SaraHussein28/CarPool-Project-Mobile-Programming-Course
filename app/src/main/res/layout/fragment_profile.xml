@@ -59,7 +59,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="29dp"
             android:layout_marginTop="20dp"
-            android:text="@string/age"
+            android:text="@string/username"
             android:textColor="@color/black"
             android:textSize="@dimen/txt_size"
             android:typeface="sans"

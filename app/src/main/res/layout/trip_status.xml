@@ -26,19 +26,19 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
-                android:id="@+id/textView01"
+                android:id="@+id/textView07"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/trip_day"
                 android:textColor="#737373"
-                app:layout_constraintBottom_toTopOf="@id/textView02"
+                app:layout_constraintBottom_toTopOf="@id/textView09"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
 
             <TextView
-                android:id="@+id/textView02"
+                android:id="@+id/textView09"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="12:30 pm"
@@ -46,8 +46,18 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/textView01" />
+                app:layout_constraintTop_toBottomOf="@id/textView07" />
 
+            <TextView
+                android:id="@+id/textView06"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="14:30 pm"
+                android:textColor="#474646"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textView09" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -55,7 +65,7 @@
         <ImageView
             android:id="@+id/imageView00"
             android:layout_width="wrap_content"
-            android:layout_height="50dp"
+            android:layout_height="100dp"
             android:src="@drawable/line"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toEndOf="@id/constraintLayout00"

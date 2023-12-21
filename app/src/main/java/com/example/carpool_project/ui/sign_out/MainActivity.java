@@ -1,4 +1,4 @@
-package com.example.carpool_project;
+package com.example.carpool_project.ui.sign_out;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.carpool_project.R;
+import com.example.carpool_project.ui.login.LoginActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 

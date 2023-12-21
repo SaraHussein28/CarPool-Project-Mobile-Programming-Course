@@ -11,16 +11,17 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.carpool_project.WordViewModel;
+import com.example.carpool_project.ui.database.WordViewModel;
 import com.example.carpool_project.databinding.FragmentProfileBinding;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class ProfileFragment extends Fragment {
+    public String userID;
     private WordViewModel mWordViewModel;
     FirebaseAuth auth;
 
     private FragmentProfileBinding binding;
-    TextView nameTextView, ageTextView, phoneTextView, emailTextView;
+    TextView nameTextView, userNameTextView, phoneTextView, emailTextView;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         auth = FirebaseAuth.getInstance();
@@ -51,7 +52,7 @@ public class ProfileFragment extends Fragment {
 
                  nameTextView.setText(words.getName());
                 // TODO: remember to handle this. otherwise, replace it with the uesrname.
-                ageTextView.setText("Placeholder");
+                userNameTextView.setText(words.getUsername());
                 phoneTextView.setText(words.getPhoneNumber());
                 emailTextView.setText(words.getEmail());
             }
@@ -61,7 +62,7 @@ public class ProfileFragment extends Fragment {
 
     private void findLayoutElements(FragmentProfileBinding binding) {
         nameTextView = binding.textView02;
-        ageTextView = binding.textView04;
+        userNameTextView = binding.textView04;
         phoneTextView = binding.textView06;
         emailTextView = binding.textView08;
     }

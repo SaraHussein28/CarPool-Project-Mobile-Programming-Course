@@ -16,7 +16,13 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".DriverMainActivity"
+            android:name=".ui.driver.DriverHomeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.driver.DriverTrips"
+            android:exported="false" />
+        <activity
+            android:name=".ui.driver.DriverMainActivity"
             android:exported="false" />
         <!--
              TODO: Before you run your application, you need a Google Maps API key.
@@ -34,21 +40,15 @@
             android:value="YOUR_API_KEY" />
 
         <activity
-            android:name=".FirstActivity"
+            android:name=".ui.rider_entry.FirstActivity"
             android:exported="false"
             android:label="@string/title_activity_first"
             android:theme="@style/Theme.CarPool_Project.NoActionBar" />
         <activity
-            android:name=".WelcomeActivity"
+            android:name=".ui.trip_details.TripActivity"
             android:exported="false" />
         <activity
-            android:name=".TripActivity"
-            android:exported="false" />
-        <activity
-            android:name=".RoutesActivity"
-            android:exported="false" />
-        <activity
-            android:name=".boardingActivity"
+            android:name=".ui.boarding.boardingActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -57,13 +57,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".RegistrationActivity"
+            android:name=".ui.registration.RegistrationActivity"
             android:exported="false" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".ui.login.LoginActivity"
             android:exported="true" />
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.sign_out.MainActivity"
             android:exported="true" />
     </application>
 

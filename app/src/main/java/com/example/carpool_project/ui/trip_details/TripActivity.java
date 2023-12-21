@@ -1,6 +1,9 @@
-package com.example.carpool_project;
+package com.example.carpool_project.ui.trip_details;
 
-import android.content.Intent;
+import static android.app.PendingIntent.getActivity;
+
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -9,7 +12,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.carpool_project.ui.cart.CartFrament;
+import com.example.carpool_project.R;
 
 public class TripActivity extends AppCompatActivity {
 
@@ -19,6 +22,7 @@ public class TripActivity extends AppCompatActivity {
     private TextView destinationPointTextView;
     private TextView priceTextView;
     private Button addToCartButton;
+    private String date;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,16 +39,32 @@ public class TripActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Toast toast = Toast.makeText(TripActivity.this, "Item Is Added To Basket", Toast.LENGTH_SHORT);
                 toast.show();
-
-                Intent intent = new Intent(TripActivity.this, CartFrament.class);
-                intent.putExtra("source", sourcePointTextView.getText());
-                intent.putExtra("destination", destinationPointTextView.getText());
-                intent.putExtra("drop_off_time", dropOffTimeTextView.getText());
-                intent.putExtra("pick_up_time", pickUpTimeTextView.getText());
-                intent.putExtra("price", priceTextView.getText());
-                startActivity(intent);
+                storeDataToSharedPref();
+                finish();
             }
         });
+    }
+
+    private void storeDataToSharedPref() {
+//        FragmentManager fragM = getSupportFragmentManager();
+//        FragmentTransaction fragT = fragM.beginTransaction();
+
+        SharedPreferences sharedPref = this.getSharedPreferences("application", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+
+//        CartFragment cartFragment = new CartFragment();
+//        Bundle trip_args = new Bundle();
+        //TODO: consider other data passing options.
+        editor.putString("source", sourcePointTextView.getText().toString());
+        editor.putString("destination", destinationPointTextView.getText().toString());
+        editor.putString("pick_up_time", pickUpTimeTextView.getText().toString());
+        editor.putString("drop_off_time", dropOffTimeTextView.getText().toString());
+        editor.putString("price", priceTextView.getText().toString());
+        editor.putString("date", date);
+//        cartFragment.setArguments(trip_args);
+        editor.apply();
+//        fragT.replace(R.id.nav_host_fragment_content_first, cartFragment);
+//        fragT.commit();
     }
 
     private void updateViews() {
@@ -53,6 +73,7 @@ public class TripActivity extends AppCompatActivity {
         String pickUpTime = getIntent().getStringExtra("pick_up_time");
         String dropOffTime = getIntent().getStringExtra("drop_off_time");
         String tripFare = getIntent().getStringExtra("price");
+        date = getIntent().getStringExtra("date");
 
         sourcePointTextView.setText(sourcePoint);
         destinationPointTextView.setText(destinationPoint);

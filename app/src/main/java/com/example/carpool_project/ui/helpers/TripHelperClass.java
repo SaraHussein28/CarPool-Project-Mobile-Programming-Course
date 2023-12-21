@@ -1,21 +1,30 @@
-package com.example.carpool_project;
+package com.example.carpool_project.ui.helpers;
 
 import androidx.annotation.NonNull;
 
-public class RouteHelperClass {
-    String source, destination, day, pickupTime, dropOffTime, price;
+public class TripHelperClass {
+    String source, destination, day, pickupTime, dropOffTime, price, status;
 
-    public RouteHelperClass() {
+    public TripHelperClass() {
 
     }
 
-    public RouteHelperClass(String source, String destination, String day, String pickupTime, String dropOffTime, String price) {
+    public TripHelperClass(String source, String destination, String day, String pickupTime, String dropOffTime, String price, String status) {
         this.source = source;
         this.destination = destination;
         this.day = day;
         this.pickupTime = pickupTime;
         this.dropOffTime = dropOffTime;
         this.price = price;
+        this.status = status;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public String getSource() {

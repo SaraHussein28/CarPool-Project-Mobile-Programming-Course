@@ -1,4 +1,4 @@
-package com.example.carpool_project;
+package com.example.carpool_project.ui.helpers;
 
 public class UserHelperClass {
     private String name;

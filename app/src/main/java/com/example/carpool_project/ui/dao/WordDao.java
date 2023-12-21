@@ -1,10 +1,13 @@
-package com.example.carpool_project;
+package com.example.carpool_project.ui.dao;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+
+import com.example.carpool_project.ui.helpers.UserHelperClass;
+import com.example.carpool_project.ui.entities.Word;
 
 import java.util.List;
 

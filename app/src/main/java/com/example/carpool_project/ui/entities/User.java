@@ -1,4 +1,4 @@
-package com.example.carpool_project;
+package com.example.carpool_project.ui.entities;
 
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;

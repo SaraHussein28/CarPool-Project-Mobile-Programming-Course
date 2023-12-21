@@ -14,7 +14,7 @@
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:listitem="@layout/item_route" />
+        tools:listitem="@layout/trip_status" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

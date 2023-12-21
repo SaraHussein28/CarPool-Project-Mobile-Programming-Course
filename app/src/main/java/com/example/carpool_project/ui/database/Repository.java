@@ -1,4 +1,4 @@
-package com.example.carpool_project;
+package com.example.carpool_project.ui.database;
 
 import static android.content.ContentValues.TAG;
 
@@ -9,17 +9,23 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.carpool_project.ui.UserDao;
+import com.example.carpool_project.ui.dao.UserDao;
+import com.example.carpool_project.ui.dao.WordDao;
+import com.example.carpool_project.ui.entities.User;
+import com.example.carpool_project.ui.entities.Word;
+import com.example.carpool_project.ui.helpers.RouteHelperClass;
+import com.example.carpool_project.ui.helpers.UserHelperClass;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
-class WordRepository {
+class Repository {
 
     private WordDao mWordDao;
     private UserDao mUserDao;
@@ -32,7 +38,7 @@ class WordRepository {
     // dependency. This adds complexity and much more code, and this sample is not about testing.
     // See the BasicSample in the android-architecture-components repository at
     // https://github.com/googlesamples
-    WordRepository(Application application) {
+    Repository(Application application) {
         WordRoomDatabase db = WordRoomDatabase.getDatabase(application);
         mWordDao = db.wordDao();
         mUserDao = db.userDao();
@@ -64,6 +70,10 @@ class WordRepository {
         });
     }
 
+//    public LiveData<ArrayList<UserHelperClass>> getUserInfoFromFirebase (){
+//
+//TODO: add implementation for this.
+//    }
     public MutableLiveData<ArrayList<RouteHelperClass>> getAllRoutes() {
 //            MutableLiveData<ArrayList<RouteHelperClass>> mAllRoutes = null;
         ArrayList<RouteHelperClass> routesList = new ArrayList<>();

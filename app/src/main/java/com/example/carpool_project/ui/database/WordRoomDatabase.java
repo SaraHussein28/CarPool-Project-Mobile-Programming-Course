@@ -1,4 +1,4 @@
-package com.example.carpool_project;
+package com.example.carpool_project.ui.database;
 
 import android.content.Context;
 
@@ -8,7 +8,10 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-import com.example.carpool_project.ui.UserDao;
+import com.example.carpool_project.ui.dao.UserDao;
+import com.example.carpool_project.ui.dao.WordDao;
+import com.example.carpool_project.ui.entities.User;
+import com.example.carpool_project.ui.entities.Word;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;

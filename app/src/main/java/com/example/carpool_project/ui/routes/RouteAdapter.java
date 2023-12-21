@@ -1,34 +1,36 @@
-package com.example.carpool_project;//package com.example.project_draft1;
+package com.example.carpool_project.ui.routes;//package com.example.project_draft1;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.MutableLiveData;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.carpool_project.R;
+import com.example.carpool_project.ui.helpers.RouteHelperClass;
 
 import java.util.ArrayList;
 
-public class CharacterAdapter extends RecyclerView.Adapter<CharacterViewHolder> {
+public class RouteAdapter extends RecyclerView.Adapter<RouteViewHolder> {
 //    private final List<Character> characters;
 
     private final ArrayList<RouteHelperClass> characters;
 
 
-    public  CharacterAdapter(ArrayList<RouteHelperClass> characters){
+    public RouteAdapter(ArrayList<RouteHelperClass> characters){
         this.characters = characters;
     }
     @NonNull
     @Override
-    public CharacterViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public RouteViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
        View itemView = LayoutInflater.from (parent.getContext()).inflate(R.layout.item_route, parent, false);
 
-        return new CharacterViewHolder(itemView);
+        return new RouteViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CharacterViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RouteViewHolder holder, int position) {
     RouteHelperClass currentCharacter = characters.get(position);
     holder.populateCharacterInfo(currentCharacter);
     }
