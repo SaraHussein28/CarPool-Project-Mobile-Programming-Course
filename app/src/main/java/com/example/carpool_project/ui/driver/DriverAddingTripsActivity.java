@@ -182,7 +182,7 @@ public class DriverAddingTripsActivity extends AppCompatActivity {
         DatabaseReference driverTripsReference = rootNode.getReference("DriverTrips");
         DatabaseReference driverIdReference = driverTripsReference.child("driverID");
         String newRouteId = String.valueOf(routeId -1);
-        driverIdReference.child(auth.getCurrentUser().getUid()).child(newRouteId).setValue(route).addOnCompleteListener(new OnCompleteListener<Void>() {
+        driverIdReference.child(auth.getCurrentUser().getUid()).child(newRouteId).setValue(newRouteId).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {

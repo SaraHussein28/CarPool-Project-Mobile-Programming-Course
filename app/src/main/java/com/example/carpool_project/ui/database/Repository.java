@@ -25,6 +25,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 class Repository {
 
@@ -34,6 +35,7 @@ class Repository {
     private final MutableLiveData<ArrayList<RouteHelperClass>> mAllRoutes = new MutableLiveData<>();
     private final MutableLiveData<ArrayList<RouteHelperClass>> driverTrips = new MutableLiveData<>();
     private final MutableLiveData<ArrayList<RouteHelperClass>> riderTrips = new MutableLiveData<>();
+    private final MutableLiveData<ArrayList<String>> driverRidesIds = new MutableLiveData<>();
     private final MutableLiveData<UserHelperClass> userData = new MutableLiveData<>();
 
 
@@ -119,8 +121,8 @@ class Repository {
         });
     }
 
-    public MutableLiveData<ArrayList<RouteHelperClass>> getDriverTrips(String driverID) {
-        ArrayList<RouteHelperClass> routesList = new ArrayList<>();
+    public MutableLiveData<ArrayList<String>> getDriverTripsIds(String driverID){
+        ArrayList<String> routesIds = new ArrayList<>();
 
         FirebaseDatabase rootNode = FirebaseDatabase.getInstance("https://carpool-project-78ad3-default-rtdb.europe-west1.firebasedatabase.app");
         DatabaseReference driverReference = rootNode.getReference("DriverTrips").child("driverID").child(driverID);
@@ -128,10 +130,11 @@ class Repository {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                for (DataSnapshot route : dataSnapshot.getChildren()) {
-                    routesList.add(route.getValue(RouteHelperClass.class));
+                for (DataSnapshot routeId : dataSnapshot.getChildren()) {
+                    routesIds.add(routeId.getValue(String.class));
+                    Log.d("ids", routeId.getValue(String.class));
                 }
-                driverTrips.postValue(routesList);
+                driverRidesIds.postValue(routesIds);
             }
 
             @Override
@@ -140,7 +143,45 @@ class Repository {
                 Log.w(TAG, "Failed to read value.", error.toException());
             }
         });
-        return driverTrips;
+        return driverRidesIds;
+    }
+    public MutableLiveData<ArrayList<RouteHelperClass>> getDriverTrips(String driverID, ArrayList<String> tripsIds) {
+        ArrayList<RouteHelperClass> routesList = new ArrayList<>();
+
+        FirebaseDatabase rootNode = FirebaseDatabase.getInstance("https://carpool-project-78ad3-default-rtdb.europe-west1.firebasedatabase.app");
+        DatabaseReference routesReference = rootNode.getReference("Routes").child("id");
+                routesReference.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        for (DataSnapshot route : dataSnapshot.getChildren()) {
+                            if (checkIntersection(route.getValue(RouteHelperClass.class).getRouteId(), tripsIds)) {
+                              Log.d("ids in data change", route.getValue(RouteHelperClass.class).toString());
+                                routesList.add(route.getValue(RouteHelperClass.class));
+                            }
+                        }
+                        driverTrips.postValue(routesList);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
+              return driverTrips;
+    }
+
+    private boolean checkIntersection(String routeId, ArrayList<String> RidesIds) {
+        Log.d("ids in check intersection - start", RidesIds.get(0));
+
+        for (String driverRideId : RidesIds){
+            Log.d("ids in check intersection", routeId);
+
+            if (Objects.equals(driverRideId, routeId)){
+                return true;
+            }
+        }
+    return false;
     }
 
     public LiveData<ArrayList<RouteHelperClass>> getRiderTrips(String riderID) {

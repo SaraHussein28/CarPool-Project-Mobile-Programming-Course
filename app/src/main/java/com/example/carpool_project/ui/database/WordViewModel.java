@@ -32,7 +32,7 @@ public class WordViewModel extends AndroidViewModel {
     public LiveData<List<Word>> getAllWords() { return mAllWords; }
 
     public LiveData<ArrayList<RouteHelperClass>> getAllRoutes() { return mAllRoutes; }
-    public LiveData<ArrayList<RouteHelperClass>> getDriverTrips(String driverID) { return mRepository.getDriverTrips(driverID); }
+    public LiveData<ArrayList<RouteHelperClass>> getDriverTrips(String driverID, ArrayList<String> tripsIds) { return mRepository.getDriverTrips(driverID, tripsIds); }
 
     public LiveData<ArrayList<RouteHelperClass>> getRiderTrips(String riderID) {
         return mRepository.getRiderTrips(riderID);
@@ -50,5 +50,9 @@ public class WordViewModel extends AndroidViewModel {
 
     public void updateTripStatus(String routeId, String status) {
         mRepository.updateTripStatus(routeId, status);
+    }
+
+    public LiveData<ArrayList<String>> getDriverTripsIds(String uid) {
+        return mRepository.getDriverTripsIds(uid);
     }
 }

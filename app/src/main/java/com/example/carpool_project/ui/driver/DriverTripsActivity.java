@@ -11,9 +11,12 @@ import com.example.carpool_project.R;
 import com.example.carpool_project.ui.database.WordViewModel;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.ArrayList;
+
 public class DriverTripsActivity extends AppCompatActivity {
     private WordViewModel mWordViewModel;
     final String[] username = {""};
+    ArrayList<String> tripsIds = new ArrayList<>();
 
     FirebaseAuth auth;
 
@@ -23,18 +26,23 @@ public class DriverTripsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_driver_trips);
         auth = FirebaseAuth.getInstance();
 //        getUserNameFromRoom();
-        RetrieveTripsData();
+        RetrieveTripsData(savedInstanceState);
     }
 
-    private void RetrieveTripsData() {
-        RecyclerView recyclerView = findViewById(R.id.recyclerView00);
+    private void RetrieveTripsData(Bundle savedInstanceState) {
         mWordViewModel = new ViewModelProvider(this).get(WordViewModel.class);
         Log.d("username is here ", auth.getCurrentUser().getUid() );
-        mWordViewModel.getDriverTrips(auth.getCurrentUser().getUid()).observe(this, words -> {
-            // Update the cached copy of the words in the adapter.
-            TripAdapter tripAdapter = new TripAdapter(words);
-            recyclerView.setAdapter(tripAdapter);
+        mWordViewModel.getDriverTripsIds(auth.getCurrentUser().getUid()).observe(this, words -> {
+                mWordViewModel.getDriverTrips(auth.getCurrentUser().getUid(), words).observe(this, trips -> {
+                    // Update the cached copy of the words in the adapter.
+                    TripAdapter tripAdapter = new TripAdapter(trips);
+                    RecyclerView recyclerView = findViewById(R.id.recyclerView00);
+                    recyclerView.setAdapter(tripAdapter);
+                });
+
         });
+
+
     }
 
 //    private void getUserNameFromRoom() {
