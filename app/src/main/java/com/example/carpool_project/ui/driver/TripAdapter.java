@@ -1,5 +1,6 @@
 package com.example.carpool_project.ui.driver;//package com.example.project_draft1;
 
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +14,7 @@ import com.example.carpool_project.ui.helpers.RouteHelperClass;
 import java.util.ArrayList;
 
 public class TripAdapter extends RecyclerView.Adapter<TripViewHolder> {
-    private final ArrayList<RouteHelperClass> characters;
+    private ArrayList<RouteHelperClass> characters;
 
 
     public TripAdapter(ArrayList<RouteHelperClass> characters){
@@ -36,5 +37,12 @@ public class TripAdapter extends RecyclerView.Adapter<TripViewHolder> {
     @Override
     public int getItemCount() {
         return characters.size();
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    public void updateItems(ArrayList<RouteHelperClass> trips) {
+        characters.clear();
+        characters.addAll(trips);
+        notifyDataSetChanged();
     }
 }

@@ -64,7 +64,6 @@ public class TripViewHolder extends RecyclerView.ViewHolder implements View.OnCl
             intent.putExtra("date", date.getText());
             intent.putExtra("route_id", routeId);
             itemView.getContext().startActivity(intent);
-
         }
     }
 }
