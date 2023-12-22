@@ -53,6 +53,7 @@ public class TripViewHolder extends RecyclerView.ViewHolder implements View.OnCl
     public void onClick(View view) {
         if (view.getId() == itemView.getId()){
 
+
             //TODO: change the navigation here.
             Intent intent = new Intent(itemView.getContext(), TripStatusChangeActivity.class);
             intent.putExtra("source", sourcePointTextView.getText());

@@ -39,34 +39,35 @@ public class MyTripsFragment extends Fragment {
         fragmentMyTripsBinding = FragmentMyTripsBinding.inflate(inflater, container, false);
         View root = fragmentMyTripsBinding.getRoot();
         auth = FirebaseAuth.getInstance();
-        getUserNameFromRoom(fragmentMyTripsBinding);
+//        getUserNameFromRoom(fragmentMyTripsBinding);
+        retrieveTripsData(fragmentMyTripsBinding);
 
         return root;
     }
     private void retrieveTripsData(FragmentMyTripsBinding fragmentMyTripsBinding) {
         RecyclerView recyclerView = fragmentMyTripsBinding.recyclerView00;
         mWordViewModel = new ViewModelProvider(this).get(WordViewModel.class);
-        mWordViewModel.getRiderTrips(username[0]).observe(getViewLifecycleOwner(), words -> {
+        mWordViewModel.getRiderTrips(auth.getCurrentUser().getUid()).observe(getViewLifecycleOwner(), words -> {
             // Update the cached copy of the words in the adapter.
             TripAdapter tripAdapter = new TripAdapter(words);
             recyclerView.setAdapter(tripAdapter);
         });
     }
 
-    private void getUserNameFromRoom(FragmentMyTripsBinding fragmentMyTripsBinding) {
-        String userEmail = auth.getCurrentUser().getEmail();
-        mWordViewModel = new ViewModelProvider(this).get(WordViewModel.class);
-        mWordViewModel.getUserData(userEmail).observe(getViewLifecycleOwner(), words -> {
-            if (words == null) {
-                Log.d("null words - rider main ", "null words - rider");
-            }
-            if (words != null){
-                Log.d("word info  - rider ", words.getEmail());
-                username[0] = words.getUsername();
-                retrieveTripsData(fragmentMyTripsBinding);
-            }
-        });
-    }
+//    private void getUserNameFromRoom(FragmentMyTripsBinding fragmentMyTripsBinding) {
+//        String userEmail = auth.getCurrentUser().getEmail();
+//        mWordViewModel = new ViewModelProvider(this).get(WordViewModel.class);
+//        mWordViewModel.getUserData(userEmail).observe(getViewLifecycleOwner(), words -> {
+//            if (words == null) {
+//                Log.d("null words - rider main ", "null words - rider");
+//            }
+//            if (words != null){
+//                Log.d("word info  - rider ", words.getEmail());
+//                username[0] = words.getUsername();
+//                retrieveTripsData(fragmentMyTripsBinding);
+//            }
+//        });
+//    }
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);

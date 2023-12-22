@@ -31,10 +31,7 @@
             android:id="@+id/nav_payment"
             android:icon="@drawable/ic_menu_slideshow"
             android:title="@string/menu_payment" />
-        <item
-            android:id="@+id/nav_wallet"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="@string/menu_wallet"/>
+
 
     </group>
 </menu>

@@ -33,8 +33,7 @@ public class HomeFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        HomeViewModel homeViewModel =
-                new ViewModelProvider(this).get(HomeViewModel.class);
+
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
@@ -51,7 +50,7 @@ public class HomeFragment extends Fragment {
 
     private void setArrayAdapters() {
 
-        datesAutoCompleteTextView.setAdapter(datesArrayAdapter);
+//        datesAutoCompleteTextView.setAdapter(datesArrayAdapter);
         sourceAutoCompleteTextView.setAdapter(districtArrayAdapter);
         destinationAutoCompleteTextView.setAdapter(districtArrayAdapter);
 
@@ -64,13 +63,13 @@ public class HomeFragment extends Fragment {
     }
 
     private void setClickListeners() {
-        datesAutoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String item = parent.getItemAtPosition(position).toString();
-                Toast.makeText(getActivity(), "Item " + item, Toast.LENGTH_SHORT).show();
-            }
-        });
+//        datesAutoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                String item = parent.getItemAtPosition(position).toString();
+//                Toast.makeText(getActivity(), "Item " + item, Toast.LENGTH_SHORT).show();
+//            }
+//        });
 
         sourceAutoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -107,7 +106,7 @@ public class HomeFragment extends Fragment {
                 //TODO: consider other data passing options.
                 args.putString("source", sourceAutoCompleteTextView.getText().toString());
                 args.putString("destination", destinationAutoCompleteTextView.getText().toString());
-                args.putString("time", datesAutoCompleteTextView.getText().toString());
+//                args.putString("time", datesAutoCompleteTextView.getText().toString());
                 routesFragment.setArguments(args);
                 fragT.replace(R.id.nav_host_fragment_content_first, routesFragment);
                 fragT.commit();
@@ -117,7 +116,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void findLayoutElements(FragmentHomeBinding binding) {
-        datesAutoCompleteTextView = binding.autoCompleteTextView00;
+//        datesAutoCompleteTextView = binding.autoCompleteTextView00;
         sourceAutoCompleteTextView = binding.autoCompleteTextView01;
         destinationAutoCompleteTextView = binding.autoCompleteTextView02;
         imageView = binding.imageView00;

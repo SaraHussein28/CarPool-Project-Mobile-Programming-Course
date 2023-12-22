@@ -98,7 +98,9 @@ class Repository {
                 for (DataSnapshot route : dataSnapshot.getChildren()) {
                     Log.d(TAG, "Value of route is: " + route.getValue().toString());
 //                    RouteHelperClass routeHelperClass = createNewRoute(route);
-                    routesList.add(route.getValue(RouteHelperClass.class));
+                   // if (!Objects.equals(route.getValue(RouteHelperClass.class).getStatus(), "Cancelled")) {
+                        routesList.add(route.getValue(RouteHelperClass.class));
+                  //  }
                     Log.d(TAG, "Value of route converted is: " + route.getValue(RouteHelperClass.class));
                     Log.d(TAG, "Value of route list are ::: " + routesList.toString());
                 }

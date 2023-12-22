@@ -16,6 +16,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.carpool_project.R;
 import com.example.carpool_project.databinding.FragmentCartFramentBinding;
 import com.example.carpool_project.ui.database.WordViewModel;
 import com.example.carpool_project.ui.helpers.RouteHelperClass;
@@ -55,12 +56,26 @@ public class CartFragment extends Fragment {
 
         binding = FragmentCartFramentBinding.inflate(inflater, container, false);
 
-        View root = binding.getRoot();
-        initViews();
-        updateViews();
-        getUserNameFromRoom();
-        addClickListeners();
+        View root;
+        if (isEmptySharedPref()){
+            Log.d("I am here", "empty");
+            root = inflater.inflate(R.layout.empty_cart, container, false);
+
+        }
+        else {
+            root = binding.getRoot();
+            initViews();
+            updateViews();
+            getUserNameFromRoom();
+            addClickListeners();
+        }
         return root;
+    }
+
+    private boolean isEmptySharedPref() {
+        SharedPreferences sharedPref = this.getActivity().getSharedPreferences("application", Context.MODE_PRIVATE);
+
+        return sharedPref.getString("source", "default").equals("default");
     }
 
     private void addClickListeners() {
@@ -69,10 +84,21 @@ public class CartFragment extends Fragment {
             public void onClick(View v) {
                 // store
                 storeRideIntoDatabase(source, destination, pickUpTime, dropOffTime, trip_fare, date, status);
+                // delete the content of the shared pref.
+                clearSharedPref();
+
                 // make transition.
+                getActivity().onBackPressed();
 
             }
         });
+    }
+
+    private void clearSharedPref() {
+        SharedPreferences sharedPref = this.getActivity().getSharedPreferences("application", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.clear();
+        editor.apply();
     }
 
 
@@ -95,7 +121,7 @@ public class CartFragment extends Fragment {
         FirebaseDatabase rootNode = FirebaseDatabase.getInstance("https://carpool-project-78ad3-default-rtdb.europe-west1.firebasedatabase.app");
         DatabaseReference driverTripsReference = rootNode.getReference("RiderTrips");
         DatabaseReference driverIdReference = driverTripsReference.child("riderID");
-        driverIdReference.child(String.valueOf(username[0])).child(routeId).setValue(route).addOnCompleteListener(new OnCompleteListener<Void>() {
+        driverIdReference.child(auth.getCurrentUser().getUid()).child(routeId).setValue(route).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
@@ -130,6 +156,12 @@ public class CartFragment extends Fragment {
             priceTextView.setText(trip_fare);
         } catch (Exception e) {
             Log.d("exception in the cart", "cart");
+            // this means that the cart is empty.
+//            ViewGroup container = (ViewGroup) getView().findViewById(R.id.constraintLayout02);
+//            container.setVisibility(View.GONE);
+//            container.removeAllViews();
+//            View chapterInflater = LayoutInflater.from(ctx).inflate(layouts[chapter], container);
+
         }
 
     }

@@ -37,6 +37,7 @@ import java.util.Map;
 import java.util.Objects;
 
 public class RegistrationActivity extends AppCompatActivity {
+    private static final String FACULTY_DOMAIN = "@eng.asu.edu.eg";
     private WordViewModel mWordViewModel;
     ArrayAdapter<String> userRoleArrayAdapter;
     AutoCompleteTextView userRoleAutoCompleteTextView;
@@ -140,6 +141,10 @@ public class RegistrationActivity extends AppCompatActivity {
                     return;
                 }
 
+                if (!(emailText.endsWith(FACULTY_DOMAIN))) {
+                    Toast.makeText(RegistrationActivity.this, "Please enter a valid email belonging to faculty of engineering", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 if (TextUtils.isEmpty(passwordText)) {
                     Toast.makeText(RegistrationActivity.this, "Enter your password", Toast.LENGTH_SHORT).show();
                     return;

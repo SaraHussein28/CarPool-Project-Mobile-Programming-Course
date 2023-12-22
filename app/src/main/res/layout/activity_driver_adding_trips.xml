@@ -36,7 +36,7 @@
         android:id="@+id/textView02"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="@id/textInputLayout00"
+        app:layout_constraintStart_toStartOf="@id/datePickerButton"
         app:layout_constraintTop_toBottomOf="@id/textView01"
         android:textSize="25sp"
         android:layout_marginTop="40dp"
@@ -44,23 +44,18 @@
         android:textStyle="bold"
         android:text="@string/add_ride_text"/>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout00"
-        android:layout_width="125dp"
+    <Button
+        android:id="@+id/datePickerButton"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:hint="NOW!"
+        android:text="Jan 1 2020"
+        android:textSize="20dp"
+        android:textColor="@color/black"
+        style="?android:spinnerStyle"
+        android:onClick="openDatePicker"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textView02"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
-
-        <AutoCompleteTextView
-            android:id="@+id/autoCompleteTextView00"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="text" />
-    </com.google.android.material.textfield.TextInputLayout>
-
+        android:layout_margin="16dp"/>
 
     <LinearLayout
         android:id="@+id/linearLayout00"
@@ -68,7 +63,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textInputLayout00"
+        app:layout_constraintTop_toBottomOf="@id/datePickerButton"
         >
 
         <androidx.constraintlayout.widget.ConstraintLayout

@@ -98,6 +98,7 @@
     <string name="fare">Fare</string>
     <string name="trip_fare">Trip Fare</string>
     <string name="confirm_the_trip">Confirm the trip</string>
+    <string name="your_cart_is_empty">Your cart is empty</string>
 
 
 </resources>
